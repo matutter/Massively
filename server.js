@@ -12,7 +12,8 @@ var http = require('http');
 http.createServer(function (req, res) {
 
 
-    jade.renderFile('./views/index.jade', function(e,page){
+    jade.renderFile('./views/index.jade', {locals:false},function(e,page){
+        console.log( e )
         res.end( page )
     })
 
