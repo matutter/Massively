@@ -12,7 +12,7 @@ var http = require('http');
 http.createServer(function (req, res) {
 
 
-    jade.renderFile('views/index.jade', function(e,page){
+    jade.renderFile('./views/index.jade', function(e,page){
         res.end( page )
     })
 
