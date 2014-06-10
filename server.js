@@ -2,14 +2,21 @@
 //  OpenShift sample Node application
 //var express = require('express');
 var   fs = require('fs')
-    , ip = process.env.OPENSHIFT_NODEJS_IP
-    , port = process.env.OPENSHIFT_NODEJS_PORT
+    , jade = require('jade')
+    , ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+    , port = process.env.OPENSHIFT_NODEJS_PORT || '8888'
 
 
 var http = require('http');
 
 http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World\n');
+
+
+    jade.renderFile('views/index.jade', function(e,page){
+        res.end( page )
+    })
+
 }).listen(port, ip);
+
+
 console.log('running ' + ip + ":" + port);
