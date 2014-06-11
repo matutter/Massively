@@ -6,8 +6,10 @@ var server  = require('./server')  // where socket io should occur
   , session = require('./session') // where cookie parsing and tokens are handled
   , mongodb = require('mongodb')
   , archy   = require('archy')
+  , branch  = null
 
 function jlog(obj) {
+  if( branch == '127.0.0.1' ) return
   console.log(  archy( obj ) )
 }
 
@@ -58,3 +60,4 @@ function begin(ip, port, dbAddr) {
 }
 
 exports.begin = begin
+exports.branch = branch
