@@ -1,4 +1,4 @@
-#!/bin/env node
+
 //  OpenShift sample Node application
 //var express = require('express');
 var   fs = require('fs')
@@ -12,10 +12,15 @@ var http = require('http');
 http.createServer(function (req, res) {
 
 
-    jade.renderFile('./views/index.jade', {locals:false},function(e,page){
-        console.log( e )
-        res.end( page )
-    })
+	jade.renderFile('./views/index.jade', {locals:false},function(e,page){
+		if(e) console.log( e )
+		res.writeHead(200, {
+	  		'Content-Length': page.length,
+	  		'Content-Type': 'text/html' 
+	  	});
+
+		res.end( page )
+	})
 
 }).listen(port, ip);
 
