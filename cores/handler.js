@@ -19,8 +19,13 @@ function std_page(res,template,db, user_session) {
     jade.renderFile( local.viewDir + template +'.jade', resourceData, function( err, page ) {
       if(err)
         missingLayout(res, template, err)
-      else
+      else {
+        res.writeHead(200, {
+          'Content-Length': page.length,
+          'Content-Type': 'text/html' 
+        });
         res.end( page )
+      }
     }) 
 
 
