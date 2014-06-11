@@ -26,11 +26,12 @@
 
   "dependencies": {
     "jade": "",
-    "socket.io": ""
+    "socket.io": "",
+    "mongodb": ""
   },
   "devDependencies": {},
   "bundleDependencies": [],
 
   "private": false,
-  "main": "server.js"
+  "main": "startApp.js"
 }
