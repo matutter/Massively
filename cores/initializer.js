@@ -52,6 +52,7 @@ handler.mimeType['svg']   = 'image/svg+xml'
 
 // which template renders for given page
 handler.pagePathTo['']      = handler.home_page
+handler.pagePathTo['home']  = handler.home_page
 handler.pagePathTo['index']  = handler.std_page
 
 
