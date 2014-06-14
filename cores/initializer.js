@@ -27,7 +27,7 @@ var css = './resources/css/'
   , img = './resources/images/'
 
 // pathTo to asset
-handler.pathTo['ico']  = css    //favicon
+handler.pathTo['ico']  = img    //favicon
 handler.pathTo['css']  = css    //stylesheets
 handler.pathTo['js']   = js     //client side javascript
 handler.pathTo['png']  = img
