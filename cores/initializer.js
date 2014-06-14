@@ -9,19 +9,17 @@ var server  = require('./server')  // where we serve things
   , archy   = require('archy')
   , branch  = null
 
-function jlog(obj) {
-  if( branch == '127.0.0.1' ) return
-  console.log(  archy( obj ) )
-}
+  function jlog(obj, override) {
+    if( branch != '127.0.0.1' && !override) return
+    console.log(  archy( obj ) )
+  }
 
   server.locals.log = jlog
   router.locals.log = jlog
   handler.locals.log = jlog
     handler.locals.home_page = 'index'
     handler.locals.viewDir = './resources/views/'
-
   session.locals.log = jlog
-
   sockets.locals.log = jlog
 
 var css = './resources/css/'
@@ -31,14 +29,14 @@ var css = './resources/css/'
 // pathTo to asset
 handler.pathTo['ico']  = css    //favicon
 handler.pathTo['css']  = css    //stylesheets
-handler.pathTo['js']   = js      //client side javascript
+handler.pathTo['js']   = js     //client side javascript
 handler.pathTo['png']  = img
 handler.pathTo['jpg']  = img
 handler.pathTo['jpeg'] = img
 handler.pathTo['woff'] = css   //bootstrap glyphicons font types
-handler.pathTo['ttf']  = css    //
-handler.pathTo['eot']  = css    //
-handler.pathTo['svg']  = css    //
+handler.pathTo['ttf']  = css   //
+handler.pathTo['eot']  = css   //
+handler.pathTo['svg']  = css   //
 
 // mimetype associated with extension
 handler.mimeType['ico']   = 'image/x-icon'
@@ -56,11 +54,19 @@ handler.mimeType['svg']   = 'image/svg+xml'
 handler.pagePathTo['']      = handler.home_page
 handler.pagePathTo['index']  = handler.std_page
 
-function begin(ip, port, dbAddr) {
- // mongodb.connect(ip+":27027", function(err, db){
-    server.startup(router.route, handler, sockets, null, session, ip, port)
-  //})
+
+function server_obj() {
+  this.setBranch = function( s ) {
+    branch = s
+  }
+
+  this.begin = function(ip, port, dbAddr) {
+    console.log( dbAddr )
+    mongodb.connect(dbAddr, function(err, db){
+      server.startup(router.route, handler, sockets, db, session, ip, port)
+    })
+  }
 }
 
-exports.begin = begin
-exports.branch = branch
+
+exports.server = server_obj

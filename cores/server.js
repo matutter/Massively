@@ -8,13 +8,13 @@ function startup (route, handler, sockets, db, session, ip, port) {
 
     socketHandler.listen( app )
 
-  local.log({ label:'server', nodes: ['online', ip+':'+port] })
+  local.log({ label:'server', nodes: ['online', ip+':'+port] }, true)
 
 	function onRequest(request, response) {
 		route(request,response,handler,db)
 	}
 
-}// end startup
+}//startup
 
 
 

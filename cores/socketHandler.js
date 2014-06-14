@@ -10,7 +10,7 @@ function socketHandler() {
 			global.current.ip.add( ip )
 			handleConnection( socket, ip )
 		})
-	}
+	}//listen
 
 
 	function handleConnection( socket, ip ) {
@@ -21,7 +21,7 @@ function socketHandler() {
 		socket.on('disconnect', function(res) {
 			global.current.ip.remove( ip )
 		})
-	}
+	}// handleConnection
 
 
 }
@@ -31,10 +31,7 @@ function socketHandler() {
 function __globalSocketData() {
 	this.current = {}
 	this.current.ip = new ipStore
-
-
-
-} //__globalSocketData
+}//__globalSocketData
 
 function ipStore () {
 	var list = {}
