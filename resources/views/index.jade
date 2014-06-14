@@ -1,14 +1,31 @@
 extends layout
 
 block content
-  .container
-    h1 looking good
+  .navbar.navbar-fixed-top(role='navigation')
+    .container
+      .navbar-header
+        button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand()
+          img.img-responive(src="codemassivelyin.png")
+      .collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li.active
+            a(href='#') Home
+          li
+            a(href='#about') About
+          li
+            a(href='#contact') Contact
 
 
+  .construction.container
+    .con-inner
+      img(src="cm.png")
+      p coming soon...
 
-    p i have this too
 
-
-    p 
-      a(href="https://www.positivessl.com" style="font-family: arial; font-size: 10px; color: #212121; text-decoration: none;")
-        img(src="https://www.positivessl.com/images-new/PositiveSSL_tl_trans.png" alt="Positive SSL on a transparent background" title="Positive SSL on a transparent background" border="0")
+  a.bot-right(href="https://www.positivessl.com" style="font-family: arial; font-size: 10px; color: #212121; text-decoration: none;")
+    img(src="https://www.positivessl.com/images-new/PositiveSSL_tl_trans.png" alt="Positive SSL on a transparent background" title="Positive SSL on a transparent background" border="0")
