@@ -61,7 +61,6 @@ function server_obj() {
   }
 
   this.begin = function(ip, port, dbAddr) {
-    console.log( dbAddr )
     mongodb.connect(dbAddr, function(err, db){
       server.startup(router.route, handler, sockets, db, session, ip, port)
     })

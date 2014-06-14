@@ -5,7 +5,9 @@ var ip    = process.env.OPENSHIFT_NODEJS_IP	|| '127.0.0.1'
 	, init  = require('./cores/initializer')
 	, dbAddr= openShiftDB()
 
+  console.log( dbAddr )
 
+  
   var instance = new init.server
 
   instance.setBranch( ip )
