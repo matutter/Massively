@@ -1,9 +1,10 @@
 // initializer
 
-var server  = require('./server')  // where socket io should occur
-  , router  = require('./router')  // where determining what type of asset should occur
-  , handler = require('./handler') // where requests are satisfied
+var server  = require('./server')  // where we serve things
+  , router  = require('./router')  // where determining what type of asset handling should occur
+  , handler = require('./handler') // where requests are actually satisfied
   , session = require('./session') // where cookie parsing and tokens are handled
+  , sockets = require('./socketHandler') // all socket communication here
   , mongodb = require('mongodb')
   , archy   = require('archy')
   , branch  = null
@@ -20,6 +21,8 @@ function jlog(obj) {
     handler.locals.viewDir = './resources/views/'
 
   session.locals.log = jlog
+
+  sockets.locals.log = jlog
 
 var css = './resources/css/'
   , js  = './resources/js/'
@@ -55,7 +58,7 @@ handler.pagePathTo['index']  = handler.std_page
 
 function begin(ip, port, dbAddr) {
  // mongodb.connect(ip+":27027", function(err, db){
-    server.startup(router.route, handler, null, session, ip, port)
+    server.startup(router.route, handler, sockets, null, session, ip, port)
   //})
 }
 

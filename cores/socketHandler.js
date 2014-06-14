@@ -1,40 +1,64 @@
-cp = require('child_process')
+var local = {}
+	, socketIO = require('socket.io')
 
-function onConnection( soc ) {
-	try {
-		var proc = cp.spawn('execs/a.out',['param1','param2'], null );
-			proc.stdout.setEncoding('utf-8');
-			proc.stdin.setEncoding('utf-8');
+function socketHandler() {
+	var global = new __globalSocketData
 
-		var writeBuffer = []
-			, artificial_latency = 50 
-			, writeCRON = setInterval(function(){
-			//console.log( proc.connected + '   ' + writeBuffer.length)
-			if( /*proc.connected &&*/ writeBuffer.length ) {
-				proc.stdin.write( writeBuffer[0] + '\n')
-				console.log( 'buffer wrote ' + writeBuffer[0] )
-				writeBuffer.shift()				
-			}
-		}, artificial_latency)
-
-		proc.stdout.on('data',function(stream){
-			console.log( proc.pid + ' >> ' + stream )
-			//writeBuffer.push( (Number(stream) + 100) )
+	this.listen = function( httpServer ) {
+		socketIO.listen( httpServer ).on('connection', function( socket ){
+			var ip = usableIP( socket.handshake.address.address )
+			global.current.ip.add( ip )
+			handleConnection( socket, ip )
 		})
-
-		proc.stderr.on('data', function(stream) {
-			console.log( stream )
-		})
-
-		proc.on('close', function(code) {
-			console.log('exit ' + code)
-		})
-
-
-
-	} catch(e) {
-		console.log(e)
 	}
+
+
+	function handleConnection( socket, ip ) {
+
+
+
+
+		socket.on('disconnect', function(res) {
+			global.current.ip.remove( ip )
+		})
+	}
+
+
 }
 
-exports.onConnection = onConnection
+
+
+function __globalSocketData() {
+	this.current = {}
+	this.current.ip = new ipStore
+
+
+
+} //__globalSocketData
+
+function ipStore () {
+	var list = {}
+	this.add = function(ip) {
+		list[ ip ] = new Date().toJSON()
+	}
+	this.remove = function(ip) {
+		delete list[ip]
+	}
+	this.toString = function() {
+		var s = []
+		var n = 0
+		for( var i in list ) {
+			s.push( (n++) +' '+ i +' '+ list[i] )
+		}
+		return s
+	}
+}//ipStore
+
+function usableIP( ip ) {
+	if(!ip) return 'error'
+	return ip.replace(/\./g,'_')
+}
+
+
+exports.socketHandler = socketHandler
+exports.locals  = local

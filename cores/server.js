@@ -1,15 +1,12 @@
 //server 
 var local = {}
   , qs    = require('querystring')
-  , socket= require('./socketHandler')
-	, io
-	, app
 
-function startup (route, handler, db, session, ip, port) {
-	app	= require('http').createServer(onRequest).listen(port, ip)
-	io	= require('socket.io').listen(app).sockets.on('connection',function(con){
-    socket.onConnection( con )
-  })
+function startup (route, handler, sockets, db, session, ip, port) {
+	var app	= require('http').createServer(onRequest).listen(port, ip)
+    , socketHandler = new sockets.socketHandler
+
+    socketHandler.listen( app )
 
   local.log({ label:'server', nodes: ['online', ip+':'+port] })
 
