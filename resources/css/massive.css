@@ -1,7 +1,20 @@
 body {
 	background: #e3e3e3;
 }
+footer {
+	background: #171a1d;
+	color:  #f3f3f3;
+	text-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+}
 
+a, a:focus  {
+	color: red;
+	text-decoration: none;
+}
+a:hover{
+	color: #fefefe;
+	text-decoration: none;
+}
 
 .navbar-fixed-top {
 	position: relative;
@@ -22,11 +35,22 @@ ul.nav.navbar-nav li a:hover {
 	border-bottom: 1px solid red;
 	color: #22272b;
 }
+
+
+.sticky-footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	padding: 15px;
+	border-top: 1px solid rgba(0,0,0,0.15);
+}
+
 .bot-right {
 	position: absolute;
 	bottom: 0;
 	right: 0;
 }
+
 
 
 .construction {
