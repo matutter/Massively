@@ -61,5 +61,6 @@ function user() {
   this.email = ''
   this.websiteURL = ''
   this.hash = ''
+  this.canPost = true
   this.color = {}
 }

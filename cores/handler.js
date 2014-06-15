@@ -11,10 +11,9 @@ function home_page(res,home,db,user_session) {
 }
 // user is the DB entry for the user
 function std_page(res,template,db, user_session) {
-  var resourceData = { pretty:true }
+  var resourceData = { pretty:true, page:template, nav:local.navbar, website:local.website, webIMG:local.websiteIMG }
 
   local.log({ label:'handler', nodes: [ template ] })
-
 
     jade.renderFile( local.viewDir + template +'.jade', resourceData, function( err, page ) {
       if(err)
@@ -27,8 +26,6 @@ function std_page(res,template,db, user_session) {
         res.end( page )
       }
     }) 
-
-
 }
 
 function std_content(res, pathto, file, mime) {
@@ -42,16 +39,18 @@ function std_content(res, pathto, file, mime) {
   })
 }
 
-
 // * on error *
 function missingLayout(res, name, err) {
-  res.end('cand find it')
+  res.writeHead(200, {
+    'Content-Length': local.errPage.length,
+    'Content-Type': 'text/html' 
+  });
+  res.end(local.errPage)
 }
 // * on error *
 function err404(res, err) {
   res.writeHead(404, {"Content-Type": "text/plain"});
-  res.write("404 Not found.");
-  res.end();
+  res.end('Error 404 not found');
 }
 function error(path, page, ext, res) {
   var err = 'not found'
@@ -65,6 +64,7 @@ exports.home_page = home_page
 exports.std_page = std_page
 exports.std_content = std_content
 exports.error = error
+exports.jade = jade
 
 exports.pathTo = assets
 exports.mimeType = mimeType

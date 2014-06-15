@@ -17,8 +17,26 @@ var server  = require('./server')  // where we serve things
   server.locals.log = jlog
   router.locals.log = jlog
   handler.locals.log = jlog
-    handler.locals.home_page = 'index'
+    handler.locals.website = "CodeMassively"
+    handler.locals.websiteIMG = 'codemassively.png'
+    handler.locals.home_page = 'home'
     handler.locals.viewDir = './resources/views/'
+    handler.locals.navbar = {}
+    handler.locals.navbar.left = {home:'home', test:'err page'}
+    handler.locals.navbar.right = {account:'sign in'}
+
+    handler.locals.init = function() {
+      handler.jade.renderFile( handler.locals.viewDir + 'notfound.jade', null, function( err, page ) {
+        console.log( err )
+        if(err)
+          handler.locals.errPage = 'set up an error page'        
+        else
+          handler.locals.errPage = page 
+      })
+    }
+    // run pre-cache
+    handler.locals.init()
+
   session.locals.log = jlog
   sockets.locals.log = jlog
 
@@ -53,8 +71,7 @@ handler.mimeType['svg']   = 'image/svg+xml'
 // which template renders for given page
 handler.pagePathTo['']      = handler.home_page
 handler.pagePathTo['home']  = handler.home_page
-handler.pagePathTo['index']  = handler.std_page
-
+handler.pagePathTo['account']  = handler.std_page
 
 function server_obj() {
   this.setBranch = function( s ) {

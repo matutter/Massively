@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  section.main
+    .container#account
+      .col-sm-6.col-sm-offset-3
+        .well.account
+          
+          ul.nav.nav-tabs
+            li
+              a.select-one.active Login
+            li
+              a.select-one Create Account
+
+          form.account-form
+            .page-header
+              .row.text-center
+                img.img-responsive.center-block(src='cmbox.png' width="200px" heigt="200px")
+            .form-group
+              label Username
+              input.form-control#Username(type="text")
+            .form-group
+              label Password
+              input.form-control#Password(type="password")
+            .sign-up
+              .col-sm-6.half
+                .form-group
+                  label.whole Email
+                    input.form-control.whole#Email(type="text")
+              .col-sm-6.half
+                .form-group
+                  label.whole Website URL
+                    input.form-control.whole#Website(type="text")
+
+            .form-group
+              a.btn.btn-success.sign-in-btn Login
+              a.btn.btn-default.sign-up-btn Create
+
