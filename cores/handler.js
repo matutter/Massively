@@ -4,28 +4,33 @@ var local = {}
   , mimeType = {}
   , pages = {}
   , assets = {}
+  , aliasList = {}
   , local = {}
 
-function home_page(res,home,db,user_session) {
-  std_page(res, local.home_page ,db,user_session)
+function aliased( res, page, db, session ) {
+  std_page( res, aliasList[ page ] , db, session )
 }
 // user is the DB entry for the user
-function std_page(res,template,db, user_session) {
-  var resourceData = { pretty:true, page:template, nav:local.navbar, website:local.website, webIMG:local.websiteIMG }
+function std_page( res, template, db, session ) {
+  var resourceData = { pretty:true, page:template, session:session, nav:local.navbar, website:local.website, webIMG:local.websiteIMG }
 
-  local.log({ label:'handler', nodes: [ template ] })
-
-    jade.renderFile( local.viewDir + template +'.jade', resourceData, function( err, page ) {
-      if(err)
-        missingLayout(res, template, err)
-      else {
-        res.writeHead(200, {
-          'Content-Length': page.length,
-          'Content-Type': 'text/html' 
-        });
-        res.end( page )
-      }
-    }) 
+  //local.log({ label:'handler', nodes: [ template ] })
+  //console.log( user_session )
+  jade.renderFile( local.viewDir + template +'.jade', resourceData, function( err, page ) {
+    if(err)
+      missingLayout(res, template, err)
+    else {
+      var exp = new Date();
+      exp.setTime( exp.getTime() + session.ttl )
+      //console.log( local.website +'='+session.id+';expire='+ exp.toGMTString() )
+      res.writeHead(200, {
+        'Set-Cookie': local.website +'='+session.id+';expire='+ exp.toUTCString(),
+        'Content-Length': page.length,
+        'Content-Type': 'text/html' 
+      });
+      res.end( page )
+    }
+  }) 
 }
 
 function std_content(res, pathto, file, mime) {
@@ -59,8 +64,12 @@ function error(path, page, ext, res) {
   else
     err404( res, err )
 }
+function setAlias(obj) {
+  aliasList = obj;
+}
 
-exports.home_page = home_page
+
+exports.aliased = aliased
 exports.std_page = std_page
 exports.std_content = std_content
 exports.error = error
@@ -69,5 +78,5 @@ exports.jade = jade
 exports.pathTo = assets
 exports.mimeType = mimeType
 exports.pagePathTo = pages
-
+exports.setAlias = setAlias
 exports.locals = local

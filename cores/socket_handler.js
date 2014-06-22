@@ -1,7 +1,8 @@
 var local = {}
 	, socketIO = require('socket.io')
+	, sdata = {}
 
-function socketHandler() {
+function socketHandler(db, defs) {
 	var global = new __globalSocketData
 
 	this.listen = function( httpServer ) {
@@ -14,17 +15,44 @@ function socketHandler() {
 
 
 	function handleConnection( socket, ip ) {
-
-
-
+		sdata[ ip ] = " asd asd asd "
+/*		socket.on('AccountREQ', function(req) {
+			var user = new defs.user
+			user.create( req.Username, req.Password, req.Email, req.Website )
+			user.removePropertyType('function')
+			if( user.valid() ) {
+				db.collection('user').insert( user, function(err, info){
+					if( err ) {
+						if( err.code == 11000 )
+							socket.emit('AccountDENY', 'Username is unavailable')
+						else
+							socket.emit('AccountDENY', 'Unknown Error')
+					}
+					else
+						socket.emit('AccountOK', user.name )
+				})
+			}
+		})
+		socket.on('LoginREQ', function(req){
+			defs.loginDEF(req, function(cred){
+				db.collection('user').findOne(cred, function(err, cursor){
+					if( err || !cursor ) {
+						socket.emit('LoginRES', false)
+					} else {
+						session.start( cursor.name, ip, function(name, cookie_token){
+							socket.emit('LoginRES', cookie_token)
+						})
+					}
+				})
+			})
+		})*/
 
 		socket.on('disconnect', function(res) {
 			global.current.ip.remove( ip )
 		})
 	}// handleConnection
 
-
-}
+}// end handler object
 
 
 
