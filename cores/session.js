@@ -4,22 +4,38 @@ function sessionZone( name, defs, local ) {
   this.peers = {}
   this.crons = {}
   this.ttl   = 2400000 // = 40 minutes
-  this.id_len= 512
+  this.id_len= 64
   this.interaction = {}
 
 
-  this.start = function( user, ip ) {
-    var key = salt(this.id_len)
-    this.peers[ ip ] = new userSession( user, ip, key, this.ttl )
-    return this.peers[ ip ]
+  this.start = function( user, token, ip ) {
+    this.peers[ token ] = new userSession( user, token, ip, this.ttl )
+    return this.peers[ token ]
   }
 
-  this.transact = function(req, ip, id, pathname, forms, cb ) {
-    this.updateCron(ip, this.ttl)
+  this.transact = function(req, ip, token, pathname, forms, cb ) {
+    var ntok = salt(this.id_len)
 
-    if( this.peers[ip] )
-      this.peers[ip].id = salt(this.id_len)
+    if( this.existOrMake(token, ntok, ip) ) {
+      /*reset both if connection from another IP happens*/
+/*      if(this.peers[token].ip != ip ) {
+        delete this.peers[token]
+        delete this.crons[token]
+        this.existOrMake(token, ip)
+      }*/
 
+      var swap = this.peers[token]
+      delete this.peers[token]
+      delete this.crons[token]
+
+
+      swap.id = ntok
+
+      this.peers[ntok] = swap
+      this.updateCron(ntok, this.ttl)
+    }
+
+    token = ntok
 
     if( req.method == 'POST' ) {
       var query = ''
@@ -32,30 +48,30 @@ function sessionZone( name, defs, local ) {
 
       req.on('end', function() {
         //get a parsed and tested object back
-        var obj = forms.parse(  pathname, qs.parse(query) )
+        query = forms.parse(  pathname, qs.parse(query) )
 
-        if( obj ) 
-          self.interact( ip, pathname, obj, cb )
+        if( query ) 
+          self.interact( req, token, pathname, query, cb )
         else 
-          cb( self.existOrMake(ip), 'unrecognized request' )
+          cb( self.peers[token], 'unrecognized request' )
         
       })
 
     } else
-      cb( this.existOrMake(ip), false )
+      cb( this.peers[token], false )
 
   }// end transaction
 
-  this.interact = function( ip, hook, obj, cb ) {
-    if( typeof this.interaction[hook] === 'function' ) this.interaction[hook]("hello")
-      console.log( hook )
-    console.log( obj )
-
-
-
-    cb( this.existOrMake(ip), false  )
+  this.interact = function( req, token, hook, query, cb ) {
+    if( typeof this.interaction[hook] === 'function' ) {
+      var self = this
+      this.interaction[hook](query, this.peers[token] , function( peer, err ){
+        console.log('completeing interaction')
+        self.peers[token] = peer
+        cb( peer, err )
+      })
+    }
   }
-
 
   this.extract = function( req ) {
     var c = req.headers.cookie
@@ -72,14 +88,20 @@ function sessionZone( name, defs, local ) {
   }
 
 
-  this.updateCron = function( ip, ttl ) {
-    this.crons[ ip ] = setTimeout(function(){
-      delete this.peers[ ip ]
+  this.updateCron = function( token, ttl ) {
+    this.crons[ token ] = setTimeout(function(){
+      if( this.peers != undefined )
+      delete this.peers[ token ]
     }, ttl)
   }
 
-  this.existOrMake = function( ip ) {
-    return this.peers[ ip ] || this.start( salt(32), ip )
+  this.existOrMake = function( token, ntok, ip ) {
+    if( this.peers[token] != undefined )
+      return true
+
+    this.peers[ ntok ] = this.start(salt(this.id_len), ntok, ip)
+
+    return false
   }
 
 }
@@ -92,12 +114,13 @@ function salt(i) {
     return s
 }
 
-function userSession(n_user, n_ip, n_key, n_ttl) {
+function userSession(n_user, n_key, n_ip, n_ttl) {
   this.name = n_user
   this.id   = n_key
   this.ip   = n_ip
   this.ttl  = n_ttl
   this.user = false
+  this.view = false
 }
 
 exports.sessionZone = sessionZone

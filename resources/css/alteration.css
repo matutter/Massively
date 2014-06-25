@@ -1,0 +1,18 @@
+.sm-tb-marg {
+	margin: 10px 10px 10px 0 ; 
+}
+.label-out {
+	position: absolute;
+	top:-22px;
+}
+.label-out > span:first-child {
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+}
+.label-out > span:last-child {
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+}
+footer {
+	margin: 5.0em;
+}

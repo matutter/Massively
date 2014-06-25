@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$('.sign-up, .sign-up-btn, .alert').hide();
+	$('.sign-up, .sign-up-btn').hide();
 
 	$('.select-one').click(function(){
 		if( $(this).hasClass('active') ) return;

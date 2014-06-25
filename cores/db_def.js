@@ -66,6 +66,7 @@ function user() {
   this.hash = ''
   this.canPost = true
   this.canComment = true
+  this.dateCreated = null
   this.color = {}
 
   this.create = function( Nname, Npass, Nmail, Nweb ) {
@@ -73,9 +74,21 @@ function user() {
     this.hash = passwordToHash( Npass )
     this.email = Nmail
     this.websiteURL = Nweb
-
+    this.dateCreated = dateNow()
   }
 
+}
+
+
+function dateNow() {
+  var date = new Date()
+    , hour = (date.getHours() < 10 ? "0" : "") + date.getHours()
+    , min  = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes()
+    , year = date.getFullYear()
+    , month= ( (date.getMonth() + 1) < 10 ? "0" : "") +  (date.getMonth() + 1)
+    , day  = ( date.getDate() < 10 ? "0" : "") +  date.getDate()
+    , now  = month+'/'+day+'/'+year+' '+hour+':'+min+(hour[0]=='0'?'PM':"AM")
+  return now
 }
 
 /*unit test*/
@@ -153,6 +166,7 @@ function DBsetup( db, verbose ) {
 // functional unit tests
 exports.DBsetup = DBsetup
 exports.loginDEF = loginDEF
+exports.getNow = dateNow
 
 // DB objects
 exports.blog_category = blog_category

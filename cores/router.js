@@ -26,16 +26,16 @@ function router( req, res, handle, db, session, forms ) {
 
 }
 
-function route(res, handle, pathname, page, ext, db, peer ) {
+function route(res, handle, pathname, page, ext, db, peer, err ) {
   /*route assets for known mimetypes*/
   if( typeof handle.mimeType[ext] === 'string' )
-    return handle.std_content(res, handle.pathTo[ ext ], pathname, handle.mimeType[ext])
+    return handle.std_content(res, handle.pathTo[ ext ], pathname, handle.mimeType[ext], err)
   else
   /*route for regular page*/
   if( typeof handle.pagePathTo[ page ] === 'function' )
-    return handle.pagePathTo[ page ]( res, page, db , peer || false )
+    return handle.pagePathTo[ page ]( res, page, db , peer || false, err )
   else
-    return handle.error(pathname, page, ext, res)
+    return handle.error(res, pathname, page, ext, peer, err)
 }
 
 

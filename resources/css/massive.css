@@ -1,6 +1,22 @@
+@font-face {
+	font-family: OpenSans;
+	src: url(OpenSans-Regular.ttf);
+}
+
+
+html {
+	font-family: "OpenSans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
 body {
+	font-family: "OpenSans","Helvetica Neue",Helvetica,Arial,sans-serif;
 	background: #e3e3e3;
 }
+.pat1 {
+	background-image: url('pattern.png');
+
+}
+
+
 footer {
 	height: 140px;
 	background: #171a1d;
@@ -129,4 +145,79 @@ ul.nav.nav-tabs li a:hover {
 .construction {
 	margin-top: 10%;
 	text-align: center;
+}
+
+.debug {
+	position: absolute;
+	bottom: 0;
+	left: 20;
+	background-color: #6cb8ae;
+}
+
+
+.manager {
+
+}
+
+.panel {
+	border-radius: 0;
+}
+
+.manager h1,.manager h3 {
+	margin: 0;
+	font-weight: 100;
+	font-size: 23.8px;
+	line-height: 38px;
+	font-family: "OpenSans";
+}
+
+.stack-box {
+	padding: 5px;
+	background-color: #fff;
+	border: 5px solid rgba(0,0,0,0);
+}
+.stack-join {
+	border-top: 1px dashed #ddd;
+}
+
+.stack-box label {
+	color: #888;
+	font-size: 13.8px !important;
+	font-weight: 200;
+	vertical-align: top;
+}
+.stack {
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom: 0;
+}
+.stack-right {
+	display: block;
+	float: right;
+}
+.stack-left {
+	display: block;
+	float: left;
+}
+
+td {
+	border-top: none !important;
+}
+
+.ok {
+	display: inline-block;
+	color:#5dda4a;
+}
+.bad {
+	color: #c8293e;
+	display: inline-block;
+}
+.allignr {
+	text-align: right;
+}
+
+.sm {
+	min-height: 140px;
 }

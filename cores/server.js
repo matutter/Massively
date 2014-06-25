@@ -7,9 +7,7 @@ function startup (route, handler, sockets, db, defs, session, forms, ip, port) {
 
     socketHandler.listen( app )
 
-  	//local.log({ label:'server', nodes: ['online', ip+':'+port] }, true)
-  	console.log('[] server online')
-
+  	console.log('[] server online ' + defs.getNow())
 
 	function onRequest(request, response) {
 		route( request, response, handler, db, session, forms )

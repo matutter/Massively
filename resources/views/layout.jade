@@ -7,6 +7,9 @@ mixin navbar-nav(active, navs)
         a(href= tab ) #{ navs[ tab ] }
   - }
 
+- if( session.user )
+  - nav.right.account = session.name
+
 
 doctype html
 html(lang="en")
@@ -33,20 +36,20 @@ html(lang="en")
             
     block content
 
-      footer.sticky-footer
-        .container
-          .col-sm-6
-            p Home
-            p About
-            p Contact
-            
-            a(href="https://www.github.com/matutter/massively") GitHub
 
-          .col-sm-6
-            //a.pull-right(href="https://www.positivessl.com" style="font-family: arial; font-size: 10px; color: #212121; text-decoration: none;")
-              //img(src="https://www.positivessl.com/images-new/PositiveSSL_tl_trans.png" alt="Positive SSL on a transparent background" title="Positive SSL on a transparent background" border="0")
+    section.debug
+      p #{sDebug}
+      - if( session.user ) {
+        table.table
+          tbody
+            - for(var prop in session ) {
+              tr
+                td #{prop}
+                td #{session[prop]}
+            - }
 
 
+    - }
 
     script(type='text/javascript' src="socket.io.js")
     script(type='text/javascript' src="jquery.js")
@@ -54,3 +57,6 @@ html(lang="en")
     script(type='text/javascript' src="bootstrap.min.js")
     - if( page == 'account' )
       script(type='text/javascript' src="account.js")
+
+//a.pull-right(href="https://www.positivessl.com" style="font-family: arial; font-size: 10px; color: #212121; text-decoration: none;")
+//img(src="https://www.positivessl.com/images-new/PositiveSSL_tl_trans.png" alt="Positive SSL on a transparent background" title="Positive SSL on a transparent background" border="0")
