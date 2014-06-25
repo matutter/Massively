@@ -27,8 +27,11 @@ function server_obj(db) {
     handler.locals.navbar.left = {home:'home', test:'err page'}
     handler.locals.navbar.right = {account:'account'}
     scraper('https://github.com/matutter','.contributions-tab',function(html) {
+      html = html.replace(/\/matutter/g,'http://www.github.com/matutter')
+      html = html.replace(/octicon\ octicon-repo/g,'glyphicon glyphicon-book')
+
+
       handler.locals.gitActivityHTML = html
-      console.log( html )
     })
 
       handler.locals.init = function() {

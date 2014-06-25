@@ -20,7 +20,8 @@ function std_page( res, template, db, session, sError ) {
       website:local.website,
       webIMG:local.websiteIMG,
       sError:sError,
-      sDebug:JSON.stringify(session)
+      sDebug:JSON.stringify(session), 
+      gitActivity: local.gitActivityHTML
     }
 
   jade.renderFile( local.viewDir + template +'.jade', resourceData, function( err, page ) {
