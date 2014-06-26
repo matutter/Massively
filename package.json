@@ -28,8 +28,7 @@
     "jade": "",
     "socket.io": "",
     "mongodb": "",
-    "archy":"",
-    "jsdom":""
+    "archy":""
   },
   "devDependencies": {},
   "bundleDependencies": [],
