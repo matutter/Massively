@@ -13,7 +13,7 @@ function aliased( res, page, db, session, sError ) {
 // user is the DB entry for the user
 function std_page( res, template, db, session, sError ) {
   var resourceData = {
-      pretty:true,
+      pretty:false,
       page:template,
       session:session,
       nav:local.navbar,
