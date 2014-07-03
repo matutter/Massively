@@ -1,8 +1,5 @@
 extends layout
-
 block content
-
-  // nav end
   .jumbotron(style='text-align:center;').nostyle
     .container
       h1 @CodeMassively
@@ -11,7 +8,7 @@ block content
         p
           ul.breadcrumb().small-font
             li
-              a(href='#') Website
+              a(href='/') Website
             li.active Me
 
   .container
@@ -32,23 +29,26 @@ block content
             .col-sm-4.nostyle
               .new-box
                 .new-inner
-                  .new-title title
+                  .new-title waiting...
                   .new-desc 
                     .spinner
+                      .load
                     p.center loading
             .col-sm-4.nostyle
               .new-box
                 .new-inner
-                  .new-title title
-                  .new-desc
-                    .spinner 
-                    p.center loading
-            .col-sm-4.nostyle
-              .new-box
-                .new-inner
-                  .new-title title
+                  .new-title waiting...
                   .new-desc
                     .spinner
+                      .load
+                    p.center loading
+            .col-sm-4.nostyle
+              .new-box
+                .new-inner
+                  .new-title waiting...
+                  .new-desc
+                    .spinner
+                      .load
                     p.center loading
       .row
         .panel.fillin.nostyle !{gitActivity}
@@ -59,23 +59,3 @@ block content
               strong Fall 2014
               .panel-body
                 | TBA
-
-
-footer
-  .container
-    .col-lg-12
-      ul.list-unstyled
-        li Made by 
-          a(href="http://www.github.com/matutter") Mat Utter
-          | . Contact me at 
-          a(href='mailto:admin@codemassively.com') mat@codemassively.com.
-        li I maintain this code right 
-          a(href="https://github.com/matutter/Massively") here on Github
-          | .
-        li Built on 
-          a(href='http://nodejs.org/') NodeJS 
-          | for 
-          a(href='https://github.com/matutter/Masset2') Masset
-          | .
-        li Style based on 
-          a(href='http://bootswatch.com/simplex/') Simplex. 

@@ -13,16 +13,18 @@ function aliased( res, page, db, session, sError ) {
 // user is the DB entry for the user
 function std_page( res, template, db, session, sError ) {
   var resourceData = {
-      pretty:false,
-      page:template,
-      session:session,
-      nav:local.navbar,
-      website:local.website,
-      webIMG:local.websiteIMG,
-      sError:sError,
-      sDebug:JSON.stringify(session), 
-      gitActivity: local.gitActivityHTML
+      'pretty':false,
+      'page':template,
+      'session':session,
+      'nav':local.navbar,
+      'website':local.website,
+      'webIMG':local.websiteIMG,
+      'sError':sError,
+      'sDebug':JSON.stringify(session), 
+      'gitActivity': local.gitActivityHTML
     }
+
+  console.log( session )
 
   jade.renderFile( local.viewDir + template +'.jade', resourceData, function( err, page ) {
     if(err)

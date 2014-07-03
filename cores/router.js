@@ -8,15 +8,20 @@ function router( req, res, handle, db, session, forms ) {
     , page= path.basename(pathname)
     , peer= null
 
+  /*see all requests by name*/
+  //console.log('[] '+pathname)
+
+    console.log( url.parse(req.url,true).query || "none" )
+
 
   if( !ext.length && req.connection.remoteAddress || false ) {
     var ip  = req.connection.remoteAddress
       , id  = session.extract( req )
 
       /*carry out all functions of the session, peer is the users stateful data*/
-      /*this is our controller*/
       session.transact(req, ip, id, pathname, forms, function( peer, err ) {
         if( err ) console.log( err )
+        console.log( pathname )
         route(res, handle, pathname, page, ext, db, peer, err )
       })
 

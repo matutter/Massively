@@ -2,6 +2,7 @@ function formParser(defs) {
   formList = {}
 
   this.parse = function( name, form  ) {
+    /*console.log( '--form ' + name  )*/
     if( typeof formList[name] === 'object' ) {
       /*get arrays from DEF*/
       crit = formList[name].critical

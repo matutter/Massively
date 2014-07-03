@@ -13,9 +13,9 @@ function sessionZone( name, defs, local ) {
     return this.peers[ token ]
   }
 
-  this.transact = function(req, ip, token, pathname, forms, cb ) {
+  this.transact = function(req, ip, token, hook, forms, cb ) {
     var ntok = salt(this.id_len)
-
+    console.log("  --transact")
     if( this.existOrMake(token, ntok, ip) ) {
       /*reset both if connection from another IP happens*/
 /*      if(this.peers[token].ip != ip ) {
@@ -38,6 +38,7 @@ function sessionZone( name, defs, local ) {
     token = ntok
 
     if( req.method == 'POST' ) {
+      /*console.log('            --POST ' + hook )*/
       var query = ''
       var self = this
 
@@ -48,10 +49,10 @@ function sessionZone( name, defs, local ) {
 
       req.on('end', function() {
         //get a parsed and tested object back
-        query = forms.parse(  pathname, qs.parse(query) )
+        query = forms.parse(  hook, qs.parse(query) )
 
         if( query ) 
-          self.interact( req, token, pathname, query, cb )
+          self.interact( req, token, hook, query, cb )
         else 
           cb( self.peers[token], 'unrecognized request' )
         
@@ -63,6 +64,7 @@ function sessionZone( name, defs, local ) {
   }// end transaction
 
   this.interact = function( req, token, hook, query, cb ) {
+    console.log( hook + query )
     if( typeof this.interaction[hook] === 'function' ) {
       var self = this
       this.interaction[hook](query, this.peers[token] , function( peer, err ){

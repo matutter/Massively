@@ -1,6 +1,6 @@
 // start app 
 
-var ip    = process.env.OPENSHIFT_NODEJS_IP	|| '127.0.0.1'
+var ip    = process.env.OPENSHIFT_NODEJS_IP	|| '192.168.56.20'
 	, port  = process.env.OPENSHIFT_NODEJS_PORT	|| '8888'
 	, init  = require('./cores/initializer')
 	, dbAddr= 'mongodb://' + openShiftDB()

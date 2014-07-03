@@ -1,19 +1,42 @@
-li {
+lli {
 	list-style: none;
 }
+
+.green, .blue, .yellow, .red { border-radius: 0; }
+.green { background: #4dff4d; }
+.blue { background:#92eeff; }
+.yellow { background: #ffff62; }
+.red { background: #f2dede; }
 
 .sm-tb-marg {
 	margin: 10px 10px 10px 0 ; 
 }
+
+.blur {
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    filter: blur(2px);
+    opacity: 0.9;
+}
+
+body {
+}
+.navbar-default {
+	border-radius: 0;
+}
+
+.modal-backdrop {background: none;}
 .label-out {
 	position: absolute;
 	top:-22px;
 }
-.label-out > span:first-child {
+.label-out > span:first-child, .label-out > a:first-child{
 	border-bottom-right-radius: 0;
 	border-top-right-radius: 0;
 }
-.label-out > span:last-child {
+.label-out > span:last-child,.label-out > a:last-child {
 	border-bottom-left-radius: 0;
 	border-top-left-radius: 0;
 }
@@ -41,14 +64,19 @@ footer {
 	margin-top: 0;
 	padding-top: 0;
 }
+
 .center {
 	text-align: center;
+}
+.left {
+	text-align: left;
 }
 .fillin .box-header {
 	min-height: 36px;
 	border:1px solid #d5d5d5;
 	border-width: 1px 1px 0 1px;
 	border-radius: 3px 3px 0 0;
+	background: #fefefe;
 }
 .box-group {
 	position: relative;
@@ -154,14 +182,48 @@ footer {
 	overflow: hidden;
 }
 
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.load
+{
+	border: 2px solid red;
+	border-width: 0 2px 2px 0;
+	width: 10px;
+	height: 10px;
+	content: " ";
+	text-align: center;
+	border-radius: 5px;
+
+    -webkit-animation-name:             rotate; 
+    -webkit-animation-duration:         0.8s; 
+    -webkit-animation-iteration-count:  infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+
+.spinner .load {
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+    -webkit-animation-duration:         0.2s;
+}
+
+
 .spinner {
   width: 40px;
   height: 40px;
   background-color: rgba(0,0,0,0.24);
   border-radius: 4px;
   margin: 20px auto;
-  -webkit-animation: rotateplane 1.67822s infinite ease-in-out;
-  animation: rotateplane 1.67822s infinite ease-in-out;
+  -webkit-animation: rotateplane 2.67822s infinite ease-in-out;
+  animation: rotateplane 2.67822s infinite ease-in-out;
 }
 
 @-webkit-keyframes rotateplane {
