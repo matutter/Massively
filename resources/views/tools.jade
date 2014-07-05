@@ -1,0 +1,16 @@
+extends layout
+block content
+  link(rel='stylesheet', href='tools.css')
+  .content
+    .col-lg-12#toolbox
+      .toolbox
+        .tool#livemark(type="button", data-toggle="tooltip", data-placement="bottom", title="\"LiveMark\" markdown editor")
+          img.img-responsive(src="livemark.png")
+        .tool#codemassively(type="button", data-toggle="tooltip", data-placement="bottom", title="\"CodeMassively.com\" my website built on my own flavor of a NodeJS backend")
+          img.img-responsive(src="codemassively.png")
+        .tool#pixel2(type="button", data-toggle="tooltip", data-placement="bottom", title="\"Pixel2\" is a color palette extractor")
+          img.img-responsive(src="pixel2.png")
+    .col-lg-12#tool-target
+      .tool-control
+        a.btn#closeToolbox Close
+      .tool-target

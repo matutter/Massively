@@ -1,0 +1,53 @@
+extends layout
+block content
+  #intro
+    .jumbotron.nomarg(style="min-width:436px;")
+      img.img-circle(src="mat.png" width="220" height="220")
+      h1 Mat utter
+      h2 Developer & Engineer 
+      h4 CodeMassively  &copy;
+
+  .container.full#main
+    .col-md-4
+      .panel
+        .panel-heading 
+          .h1 current
+        .panel-body
+          ul.list-group
+            li.list-group-item
+              strong Jobs
+              span.badge 2
+              ul.list-group
+                li.list-group-item.list-group-fix Computer Science Tutor
+                  span.badge SUNYIT
+                li.list-group-item.list-group-fix Software Engineer
+                  span.badge PARSONS
+
+            li.list-group-item
+              strong Projects
+              span.badge 4
+              ul.list-group
+                li.list-group-item.list-group-fix Massively
+                  .progress.half.pull-right.nostyle
+                    .progress-bar(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 60%;').col1
+                      | 60%
+                li.list-group-item.list-group-fix LiveMark
+                  .progress.half.pull-right.nostyle
+                    .progress-bar(role='progressbar', aria-valuenow='10', aria-valuemin='0', aria-valuemax='100', style='width: 10%;').col1
+                      | 10%
+                li.list-group-item.list-group-fix RAC-drone
+                  .progress.half.pull-right.nostyle
+                    .progress-bar(role='progressbar', aria-valuenow='0', aria-valuemin='0', aria-valuemax='100', style='width: 0%;').col1
+                      | 0%
+                li.list-group-item.list-group-fix PropSolve
+                  .progress.half.pull-right.nostyle
+                    .progress-bar(role='progressbar', aria-valuenow='80', aria-valuemin='0', aria-valuemax='100', style='width: 80%;').col1
+                      | 80%
+    .col-md-4
+      .link-box
+        a(href="https://github.com/matutter") GitHub/matutter
+        a(href="https://twitter.com/matutter") Twitter/matutter
+
+
+
+

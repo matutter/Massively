@@ -1,19 +1,19 @@
 // start app 
 
-var ip    = process.env.OPENSHIFT_NODEJS_IP	|| '192.168.56.20'
+var ip    = process.env.OPENSHIFT_NODEJS_IP	|| '127.0.0.1'
 	, port  = process.env.OPENSHIFT_NODEJS_PORT	|| '8888'
 	, init  = require('./cores/initializer')
 	, dbAddr= 'mongodb://' + openShiftDB()
   , mongodb = require('mongodb');
 
 
-  mongodb.connect(dbAddr, function(err, db){
+  /*mongodb.connect(dbAddr, function(err, db){*/
 
-    var instance = new init.server( db )
-    instance.setup(  )
+    var instance = new init.server()
+    instance.setup()
     instance.begin( ip, port )
 
-  })
+  /*})*/
 
 function openShiftDB() {
   return process.env.OPENSHIFT_MONGODB_DB_PASSWORD ? process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +

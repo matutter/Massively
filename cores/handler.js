@@ -7,31 +7,24 @@ var local = {}
   , aliasList = {}
   , local = {}
 
-function aliased( res, page, db, session, sError ) {
-  std_page( res, aliasList[ page ] , db, session, sError )
+function aliased( res, page ) {
+  std_page( res, aliasList[ page ] )
 }
 // user is the DB entry for the user
-function std_page( res, template, db, session, sError ) {
+function std_page( res, template ) {
   var resourceData = {
-      'pretty':false,
-      'page':template,
-      'session':session,
-      'nav':local.navbar,
-      'website':local.website,
-      'webIMG':local.websiteIMG,
-      'sError':sError,
-      'sDebug':JSON.stringify(session), 
-      'gitActivity': local.gitActivityHTML
+      'pretty': false,
+      'page'  : template,
+      'nav'   : local.navbar
     }
 
-  console.log( session )
-
+  //console.log( '+ ' + local.viewDir +template )
   jade.renderFile( local.viewDir + template +'.jade', resourceData, function( err, page ) {
     if(err)
-      missingLayout(res, template, cookieString(session.id, session.ttl), err)
+      missingLayout(res, template, err)
     else {
       res.writeHead(200, {
-        'Set-Cookie': cookieString(session.id, session.ttl),
+        /*'Set-Cookie': cookieString(session.id, session.ttl),*/
         'Content-Length': page.length,
         'Content-Type': 'text/html' 
       });
@@ -52,26 +45,26 @@ function std_content(res, pathto, file, mime) {
 }
 
 // * on error *
-function missingLayout(res, name, cookieData, err) {
-  res.writeHead(200, {
-    'Set-Cookie': cookieData,
+function missingLayout(res, name, err) {
+/*  res.writeHead(200, {
+    //'Set-Cookie': cookieData,
     'Content-Length': local.errPage.length,
     'Content-Type': 'text/html' 
   });
-  res.end(local.errPage)
+  res.end(local.errPage)*/
 }
 // * on error *
 function err404(res, err) {
   res.writeHead(404, {"Content-Type": "text/plain"});
   res.end('Error 404 not found');
 }
-function error(res, path, page, ext, peer, err) {
+function error(res, path, page, ext,  err) {
   if(!err)
     err = 'unkown error: 404'
 
-  if(!ext)
-    missingLayout( res, path, cookieString(peer.id, peer.ttl), err)
-  else
+/*  if(!ext)
+    missingLayout( res, path, err)
+  else*/
     err404( res, err )
 }
 function setAlias(obj) {

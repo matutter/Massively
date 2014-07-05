@@ -1,0 +1,84 @@
+.panel#CodeMassively
+  .panel-header.tool-info
+    .container.nostyle.full
+      .col-sm-4
+        h1 CodeMassively 
+      .col-sm-8
+        .label-group
+          span.label.label-dark Require 
+          span.label(style="background:#80bd01;") 
+            a(style="color:#333;") NodeJS
+          span.label(style="background:#b6dac9;") 
+            a(style="color:#333;") Jade
+          span.label(style="background:#f7a037;") 
+            a(style="color:#333;") Socket.io
+          span.label(style="background:#402817;") 
+            a(style="color:#efefef;") MongoDB
+      .col-sm-12
+        blockquote CodeMassively is a website built on the Masset back-end. Masset is dedicated to making a platform much like Express but providing a much more entuitive program flow.
+  .panel-body
+    .col-sm-12.nostyle
+      .container#markdown
+        h1 About Massively
+        p
+          a(href='https://github.com/matutter/Massively', title='Github') The GitHub Link 
+          br
+          | This was originally matutter.com, but i wanted a cooler sounding domain name. Also, Masset is what I call the backend a lot because that's the original name. It's was originally supposed to mimic the 
+          strong Ruby Asset Pipeline 
+          | but the awesome best practices of NodeJS shifted the focus. Anyway, "My asset pipeline" or just "my asset" makes the Masset pipeline, which refers to those 4 immovable cores that together, server a static website entirely.  
+          br
+          br
+          | I really only do this for an excuse to use my backend. In reality I hate web developement, I'm not an artist, just a programmer. 
+          | I'm going to try and develope both this front end and backend using as many "ideas" as possible. That means I'm going to build it very slowly, because when It comes to my own things, and I have a ton of things all the time, I tend to distribute my efforts broadly.
+
+
+
+        h2#components Components 
+          p
+            strong Immovable Core (All in use)
+          ol
+            li
+              | initializer.js
+              ul
+                li Setup instance variables and set module locals 
+                li DB connections and being Cron jobs
+            li
+              | server.js
+              ul
+                li
+                  | where connections are initialized; starts Socket handling or general POST/GET handling
+            li
+              | router.js
+              br
+              ul
+                li Determine how to route requests to the handler as defined by the initializer
+            li
+              | handler.js
+              br
+              ul
+                li Satisfies requests at the end of a pipe. 
+          p
+            strong Optional Core
+          ol
+            li
+              | db_def.js
+              ul
+                li Contains database and other general object definitions, prototypes
+            li
+              | form_parser.js
+              br
+              ul
+                li validates, sanitizes and creates objects for form data
+            li
+              | scraper.js
+              br
+              ul
+                li scrapes urls and puls HTML between a given tag
+            li
+              | session.js
+              br
+              ul
+                li
+                  | An implementation of session, using client side cookies and server side hash tables
+            li socket_handler.js 
+
