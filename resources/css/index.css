@@ -1,0 +1,73 @@
+/*************************
+        INTRO
+*************************/
+#intro {
+	text-align: 	center;
+	position: 		relative;
+	z-index:		303;
+	height: 		auto;
+	width: 			100%;
+	right: 			0;
+	left:			0;
+	top:			0;
+
+	border:         solid #5fcfb8;
+	border-width:   0 0 4px 0;
+	color: 			#5fcfb8;
+	overflow: hidden;
+
+}
+
+#intro h1 {
+	margin: 0;
+	font-weight: 900;
+	text-transform: uppercase;
+}
+#intro h2, #intro h3, #intro h4 {
+	margin: 0;
+}
+/************************
+		MAIN CONTENT
+************************/
+.content, .content p {
+	
+}
+#main {
+	background:#5fcfb8;
+	padding-top: 20px;
+}
+#main .panel-heading {
+	color: #34ad95;
+	text-transform: uppercase;
+	font-weight: 900;
+	overflow: hidden;
+}
+#main .panel {
+	background: transparent;
+	min-width: 320px;
+}
+#main .list-group-item, #main .badge {
+	background: transparent;
+	border-color: #227262;
+	color: #227262;
+}
+#main .badge {
+	border: 1px solid;
+}
+#main {
+	font-size: 2.4em !important;
+}
+.link-box {
+	text-align: right;
+	padding: 15px;
+}
+.link-box a {
+	color: #227262;
+	font-size: 3.6em;
+	display: block;
+}
+.link-box a:hover {
+	color: #34ad95;
+	text-shadow:1px 1px 1px rgba(0,0,0,0.5);
+	text-decoration: none;
+}
