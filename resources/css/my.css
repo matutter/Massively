@@ -1,3 +1,32 @@
+/*TY for the mountain http://www.landscapehdwalls.com/white-mountains-522/ */
+@font-face {
+    font-family: Roboto-BI;
+    src: url(Roboto-BlackItalic.ttf);
+}
+@font-face {
+    font-family: Roboto-MI;
+    src: url(Roboto-MediumItalic.ttf);
+}
+@font-face {
+    font-family: Roboto-R;
+    src: url(Roboto-Regular.ttf);
+}
+@font-face {
+    font-family: Roboto-T;
+    src: url(Roboto-Thin.ttf);
+}
+.BI {
+	font-family: Roboto-BI;
+}
+.MI {
+	font-family: Roboto-MI;
+}
+.R {
+	font-family: Roboto-R;
+}
+.T {
+	font-family: Roboto-T;
+}
 .col1 { background: #34ad95; color: #333; }
 a {
 	cursor: pointer;
@@ -11,9 +40,8 @@ li {
 body {
 	background: #edeff0;
 	padding-left: 70px;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-size: 62.5%;
-	color: #8d9aa5;
+	font-family: Roboto-R,"Helvetica Neue",Helvetica,Arial,sans-serif;
+	color: #fff;
 	line-height: 1;
 	-webkit-transition-duration: 0.2s;
 	-moz-transition-duration: 0.2s;
@@ -35,8 +63,8 @@ body {
 	text-align: center;
 }
 .nostyle {
-	padding: 0;
-	margin: 0;
+	padding: 0!important;
+	margin: 0 !important;
 }
 .null {
 	border:0 !important;
@@ -91,6 +119,7 @@ body {
     NAVIGATION
 *************************************/
 nav {
+	font-size: 51.5% !important;
 	background: #384047;
 	width: 70px;
 	position: fixed;
@@ -106,6 +135,9 @@ nav {
 	-moz-transition-duration: 0.2s;
 	-o-transition-duration: 0.2s;
 	transition-duration: 0.2s;
+}
+nav .glyphicon {
+		line-height: 43px !important;
 }
 .nav-top {
 	position: absolute;
@@ -134,7 +166,7 @@ nav {
 	color: #fff;
 }
 .nav-top .nav-button.active {
-	border-right: 5px solid #edeff0;
+	border-right: 5px solid #fff;
 }
 .nav-bottom .nav-button.active {
 	border-right: 5px solid #edeff0;

@@ -16,7 +16,8 @@ function server_obj(db) {
     handler.locals.navbar = {
       top:[
         new defs.nav('glyphicon-home', 'Home', 'home', 'index'), 
-        new defs.nav('glyphicon-book', 'Blog', '', 'blog')
+        new defs.nav('glyphicon-book', 'Blog', '', 'blog'),
+        new defs.nav('glyphicon-user', 'About', 'about', 'about')
       ],
       bottom:[
         new defs.nav('glyphicon-briefcase', 'Projects', 'tools', 'tools')
@@ -60,6 +61,7 @@ function server_obj(db) {
     handler.pagePathTo['livemark']= handler.aliased
     handler.pagePathTo['codemassively']= handler.aliased
     handler.pagePathTo['pixel2']= handler.aliased
+    handler.pagePathTo['about'] = handler.std_page
     /*Given:Used*/
     handler.setAlias({ 
       '':'index',
