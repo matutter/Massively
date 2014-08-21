@@ -1,8 +1,11 @@
 var http  = require('http')
   , path  = require('path')
-  , mime = require('mime')
+  , mime  = require('mime')
   , url   = require('url')
   , fs    = require("fs")
+  , ip    = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+  , port  = process.env.OPENSHIFT_NODEJS_PORT || '8888'
+  , dbAddr= 'mongodb://' + openShiftDB()
 
 
 http.createServer(function (req, res) {
@@ -20,11 +23,22 @@ http.createServer(function (req, res) {
 
   });
 
-}).listen(1337, '127.0.0.1');
+}).listen(port, ip);
 
+/*Handle error*/
 function ERR_not_found(pathname, res) {
   res.writeHead(404, {'Content-Type': 'text/plain'});
   res.end('Not Found.\n');
 }
 
-console.log('Server running at http://127.0.0.1:1337/');
+/*Get environment from OPENSHIFT*/
+function openShiftDB() {
+  return process.env.OPENSHIFT_MONGODB_DB_PASSWORD ? process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+    process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+    process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+    process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+    process.env.OPENSHIFT_APP_NAME : '127.0.0.1:27017/massively' 
+}
+
+/*Hello world*/
+console.log('Server running at http://'+ip+':'+port+'/');
