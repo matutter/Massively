@@ -1,0 +1,35 @@
+<link rel="import" href="rando-quote.html">
+<polymer-element name="home-tray" attributes="label, active" noscript>
+	<template>
+	<style>
+		:host {			
+			background-color: transparent;
+			text-align: center;
+			min-height: 500px;			
+			padding: 90px;
+			color:#fff;
+			text-shadow: -1px 2px 4px rgba(0,0,0,0.5);
+		}
+		:host /deep/ .flare {
+			display: inline-block;
+			font-size: 1.212485em;
+			font-weight: 700;
+		}
+	</style>
+		<!-- Just testing core style -->
+		<core-style ref="flare"></core-style>
+		<core-style ref="reg-btn"></core-style>
+		<core-layout></core-layout>
+		<div></div>
+		<div core-flex>
+			<h1>
+				<div class="flare">CodeMassively</div> is under construction!
+			</h1>
+			<rando-quote></rando-quote>
+			<a class="btn reg-btn">Check out my blog</a>
+
+
+		</div>
+		<div></div>
+	</template>
+</polymer-element>

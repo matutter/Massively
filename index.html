@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="cores/platform/platform.js"></script>
+		<link rel="import" href="cores/polymer/polymer.html">
+		<link rel="import" href="cores/core-range/core-range.html">
+		<link rel="import" href="cores/font-roboto/roboto.html">
+		<link rel="import" href="cores/core-layout/core-layout.html">
+		<link rel="import" href="cores/core-ajax/core-ajax.html">
+		<link rel="import" href="cores/core-animated-pages/core-animated-pages.html">
+
+	<!--
+		<link rel="import" href="cores/core-pages/core-pages.html">
+		<link rel="import" href="cores/core-selection/core-selection.html">
+	-->
+		<link rel="import" href="cores/menu.html">
+		<link rel="import" href="cores/app-styles.html">
+		<link rel="import" href="cores/page-slider.html">
+
+		<style>
+			html {
+				background-image: url(cores/pat2.bg.png);
+				background-color: #24313C;
+				font-family: RobotoDraft;
+			}
+			body {
+				margin:  0;
+				padding: 0;
+				background-color: #24313C;
+				background-image: url(cores/pat2.bg.png);
+			}
+		</style>
+
+	</head>
+	<body unresolved>
+		<code-massively> </code-massively>
+	</body>
+</html>
+
+<polymer-element name="code-massively">
+	<template>
+		<cm-menu tab="{{view}}"> </cm-menu>
+		<core-animated-pages id="pages" selected="{{current}}"  transitions="cross-fade">
+		</core-animated-pages>
+	</template>
+	<script>
+		Polymer('code-massively',{
+			view : "",
+			current : 0,
+			observe : {
+				view : 'renderContet'
+			},
+			routes : {
+				  "logo": 	{ url:"cores/home-tray.html", elem:"home-tray", cache:null}
+				, "landing":{ url:"cores/home-tray.html", elem:"home-tray", cache:null}
+				, "blog": 	{ url:"cores/place-holder.html", elem:"place-holder", cache:null}
+				, "git": 	{ url:"cores/place-holder.html", elem:"place-holder", cache:null}
+				, "about": 	{ url:"cores/place-holder.html", elem:"place-holder", cache:null}
+				, "" : 		{ url:"cores/home-tray.html", elem:"home-tray", cache:null}
+			},
+			ready: function() {
+				this.ctx = function() {
+					return this.routes[this.view];
+				};
+				/* envoke through observer */
+				this.view = "landing";
+			}, // ready End
+			renderContet: function(){
+				page = this.ctx();
+				//console.log( "rendering: " + page.elem + "\tmethod: " + (page.cached?"Cache":"Ajax") );
+
+				if( page.cache == null )
+					this.Import( page, this );
+				else this.current = page.cache
+			},
+			Import : function(page, owner) {
+				var index = owner.$.pages.children.length;
+                this.routes[this.view].cache = index;
+
+                var link = document.createElement('link');
+				link.setAttribute('rel', 'import');
+				link.setAttribute('href', page.url);
+				link.onload = function() {
+					var section = document.createElement("section");
+						section.setAttribute("id", owner.view)
+
+					var node = document.createElement(page.elem);
+						node.setAttribute("cross-fade","");
+
+					section.appendChild( node )
+					owner.$.pages.appendChild( section );				
+					owner.current = index;
+				};
+				document.body.appendChild(link);
+				
+			}
+		});
+	</script>
+</polymer-element>
+
+
+<!-- Thank you 
+	SubtlePatterns.com : http://subtlepatterns.com/gplay/
+	Polymer : http://www.polymer-project.org/
+-->

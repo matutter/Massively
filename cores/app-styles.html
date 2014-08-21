@@ -1,0 +1,41 @@
+<link rel="import" href="core-style/core-style.html">
+
+<core-style id="flare">
+<style>
+:host /deep/ .flare {
+	color: #00AED1;
+}
+</style>
+</core-style>
+
+<core-style id="btn">
+<style>
+	.btn {
+		background-color: #3B4B54;
+		border-radius: 3px;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: inline-block;
+		height: 44px;
+		line-height: 20px;
+		min-width: 120px;
+		width: 240px;
+		padding: 13px 15px;
+		text-align: center;
+	}
+</style>
+</core-style>
+
+
+<core-style id="reg-btn">
+<style>
+{{list.btn.cssText}}
+:host /deep/ .btn.reg-btn {
+	margin: 60px 0 0 20px;
+	background-image: linear-gradient(#00AED1, #0099B7);
+}
+:host /deep/ .btn.reg-btn:hover {
+	background-image: linear-gradient(#00AED1, #00849e);
+}
+</style>
+</core-style>

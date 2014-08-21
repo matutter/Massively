@@ -1,0 +1,52 @@
+<polymer-element name="rando-quote" attributes="quote, author" on-click="{{shuffle}}">
+	<template>
+	<style>
+		:host {
+			display: inline-block;
+			cursor: pointer;
+			width: 100%;
+		}
+		:host p {
+		}
+	</style>
+	<core-ajax id="ajax"
+		auto 
+		url="./quotes.json"
+		on-core-response="{{renderQuote}}"
+		handleAs="json">
+	</core-ajax>
+	<p>
+		<content></content>
+	</p>
+	</template>
+	<script>
+		Polymer("rando-quote", {
+			ref:null,
+			created:function(){
+				this.quotes = [];
+				this.quote = "";
+				this.author = ""; 
+				this.split  = "<br>— ";
+				this.innerHTML = "You have no quotes" + this.split + "the system";
+				ref = this;
+			},
+			attributeChanged: function(attrName, oldVal, newVal) {
+				console.log(attrName, 'old: ' + oldVal, 'new:', newVal);
+			},
+			renderQuote: function() {
+				this.quotes = this.$.ajax.response.slice(0);
+				var quote = this.quotes[Math.floor(Math.random()*this.quotes.length)]
+				this.update( quote.quote, quote.author )
+			},
+			shuffle: function(){
+				var quote = this.quotes[Math.floor(Math.random()*this.quotes.length)]
+				this.update( quote.quote, quote.author )
+			},
+			update:function( quote, author ){
+				this.quote = quote;
+				this.author = author;
+				ref.innerHTML = '"'+this.quote+'"<i>' + this.split + this.author+"</i>";
+			}
+		});
+	</script>
+</polymer-element>

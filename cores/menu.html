@@ -1,0 +1,138 @@
+<link rel="import" href="core-toolbar/core-toolbar.html">
+<link rel="import" href="paper-shadow/paper-shadow.html">
+<link rel="import" href="paper-ripple/paper-ripple.html">
+<link rel="import" href="paper-button/paper-button.html">
+
+<polymer-element name="cm-menu" attributes="tab">
+	<template>
+		<style>
+			:host core-toolbar {
+				background-color:	#26343f;
+				color: 				#b3b3b3;
+				font-size: 			12px;
+				font-style: 		normal;
+				font-variant: 		normal;
+				font-weight: 		300;
+				text-transform: 	uppercase;
+			}
+			:host {
+				display: block;
+			}
+		</style>
+		<core-toolbar>
+			<core-layout></core-layout>
+			<template repeat="{{l in left_tabs}}">
+				<cm-button class="bottom" active="{{l.active}}" id="{{l.id}}" label="{{l.label}}" clickHandler="{{tabClick}}" core-flex></cm-button>
+			</template>
+			<template repeat="{{r in right_tabs}}">
+				<cm-button class="bottom {{r.active?'active':''}}" on-tap="{{tabTap}}" active="{{r.active}}" id="{{r.id}}" label="{{r.label}}" clickHandler="{{tabClick}}"></cm-button>
+			</template>
+			<core-selection id="selector" on-core-select="{{tabReset}}"></core-selection>
+		</core-toolbar>
+		<paper-shadow z="1"> </paper-shadow>
+	</template>
+	<script>
+	Polymer('cm-menu',{
+		ready: function(){
+			this.left_tabs = [
+				{ id: 		"logo"
+				, active: 	false
+				, label: 	"Logo"
+				}
+			];
+			this.right_tabs = [
+				{ id: 		"landing"
+				, active: 	true
+				, label: 	"Landing Pad"
+				},
+				{ id: 		"blog"
+				, active: 	false
+				, label: 	"Blog"
+				},
+				{ id: 		"git"
+				, active: 	false
+				, label: 	"Github"
+				},
+				{ id: 		"about"
+				, active: 	false
+				, label: 	"About"
+				}
+			];
+		}, // ready End
+		tabClick: function(sender) {
+			/* how to add a callback */
+		}, // tabClick End
+		tabTap: function( e, detail, sender ) {
+			this.tab = sender.name
+			for( var i in this.right_tabs )
+				this.right_tabs[i].active = false;
+			sender.active = true;
+		} // tap End
+	});
+	</script>
+</polymer-element>
+
+<polymer-element name="cm-button" active="" attributes="label, active, clickHandler" on-click="{{click}}" >
+	<template>
+		<style>
+		:host {
+			cursor: pointer;
+		}
+		:host paper-button {
+			text-align: center;
+			cursor: pointer;
+		}
+		:host(.box) paper-button {
+			border: 1px solid #b3b3b3;
+			border-radius: 3px;
+		}
+		:host(:hover) paper-button {
+			background-color: #b3b3b3;
+			color:#26343f;
+		}
+		:host(.active) paper-button {
+			border-color: #00b2b3;
+			background-color: rgba(0,0,0,0.1333);
+			color:#00b2b3;
+		}
+		:host(.active:hover) paper-button {
+			background-color:#00b2b3;
+			color:#26343f;
+		}
+		paper-button::shadow #ripple {
+			color: #222;
+		}
+		</style>
+		<paper-button label="{{label}}"></paper-button>
+	</template>
+	<script>
+		Polymer("cm-button", {
+			/*Private proterties outside publish*/
+			publish: {
+				/* Public properties*/
+			},
+			created: function(){
+				/*CB when instane is created*/
+			},
+			ready: function() {
+				/*CB when fully ready NOTE: behaves weird*/
+				this.name = this.id
+			},
+			attached: function () {
+				/*CB when instance enters DOM*/
+			},
+			domReady: function() {
+				/*When this instance knowns children exist*/
+			},
+			detached: function() {
+				/*CM after removal from DOM*/
+			},
+			attributeChanged: function(attrName, oldVal, newVal) {
+				//console.log(this.name , attrName, 'old: ' + oldVal, 'new:', newVal);
+			},
+      		click: function(event, detail, sender) {
+      			/*this.clickHandler(sender)*/
+      		}
+		});
+	</script>
+</polymer-element>

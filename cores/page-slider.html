@@ -1,0 +1,59 @@
+<link rel="import" href="core-animation/core-animation.html">
+<polymer-element name="page-slider" attributes="visibility">
+	<template>
+		<style>
+			:host {
+				display: inline-block;
+				background: white;
+				width: 100%;
+				height: 100px;
+				content: "";
+			}
+		</style>
+		<h1>{{id}}</h1>
+		<content> </content>
+	</template>
+	<script>
+	Polymer('page-slider',{
+		visibility : false,
+		fader : {},
+		start : 1,
+		stop: 0,
+		end: "none",
+		observe : {
+			visibility : function() {
+				this.visibility ? this.slideIn() : this.slideOut()
+			}
+		},
+
+		ready : function() {
+			this.fader = new CoreAnimation();
+			this.fader.duration = 600;
+			this.fader.keyframes = [
+			  {opacity: this.start},
+			  {opacity: this.stop},
+			  {display: this.end }
+			];
+			this.fader.target = this;
+		},
+
+		slideIn : function() {
+			console.log( this.id + " in" )
+			this.start = 0;
+			this.stop = 1;
+			this.end = "inline-block"
+			this.fader.play();
+			this.style.display = this.end
+		},
+		slideOut : function() {
+			console.log( this.id + " out" )
+			this.start = 1;
+			this.stop = 0;
+			this.end = "none"
+			this.fader.play();
+			this.style.display = this.end
+		},
+
+	});
+	</script>
+</polymer-element>
