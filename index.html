@@ -40,7 +40,7 @@
 <polymer-element name="code-massively">
 	<template>
 		<cm-menu tab="{{view}}"> </cm-menu>
-		<core-animated-pages id="pages" selected="{{current}}"  transitions="cross-fade">
+		<core-animated-pages id="pages" selected="{{current}}"  transitions="hero-transition slide-down">
 		</core-animated-pages>
 	</template>
 	<script>
@@ -53,7 +53,7 @@
 			routes : {
 				  "logo": 	{ url:"cores/home-tray.html", elem:"home-tray", cache:null}
 				, "landing":{ url:"cores/home-tray.html", elem:"home-tray", cache:null}
-				, "blog": 	{ url:"cores/place-holder.html", elem:"place-holder", cache:null}
+				, "blog": 	{ url:"cores/bloggable.html", elem:"bloggable-blog", cache:null}
 				, "git": 	{ url:"cores/place-holder.html", elem:"place-holder", cache:null}
 				, "about": 	{ url:"cores/place-holder.html", elem:"place-holder", cache:null}
 				, "" : 		{ url:"cores/home-tray.html", elem:"home-tray", cache:null}
@@ -62,8 +62,7 @@
 				this.ctx = function() {
 					return this.routes[this.view];
 				};
-				/* envoke through observer */
-				this.view = "landing";
+				this.view = window.location.hash.split("#")[1];
 			}, // ready End
 			renderContet: function(){
 				page = this.ctx();
@@ -84,8 +83,11 @@
 					var section = document.createElement("section");
 						section.setAttribute("id", owner.view)
 
+
 					var node = document.createElement(page.elem);
-						node.setAttribute("cross-fade","");
+						node.setAttribute("hero-id","hero");
+						node.setAttribute("hero","");
+
 
 					section.appendChild( node )
 					owner.$.pages.appendChild( section );				

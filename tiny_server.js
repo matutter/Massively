@@ -4,7 +4,7 @@ var http  = require('http')
   , url   = require('url')
   , fs    = require("fs")
   , ip    = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
-  , port  = process.env.OPENSHIFT_NODEJS_PORT || '8888'
+  , port  = process.env.OPENSHIFT_NODEJS_PORT || '8000'
   , dbAddr= 'mongodb://' + openShiftDB()
 
 
@@ -13,7 +13,7 @@ http.createServer(function (req, res) {
 
   pathname = pathname == "" ? "index.html" : "./" + pathname;
 
-  console.log( pathname );
+  //console.log( pathname );
 
   fs.readFile( pathname, function(e, data){
     if( e ) return ERR_not_found(pathname, res);

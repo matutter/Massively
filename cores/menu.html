@@ -22,10 +22,12 @@
 		<core-toolbar>
 			<core-layout></core-layout>
 			<template repeat="{{l in left_tabs}}">
-				<cm-button class="bottom" active="{{l.active}}" id="{{l.id}}" label="{{l.label}}" clickHandler="{{tabClick}}" core-flex></cm-button>
+				<cm-button class="bottom" active="{{l.active}}" id="{{l.id}}" label="" clickHandler="{{tabClick}}" core-flex>
+					<img src="cmicon.png">
+				</cm-button>
 			</template>
 			<template repeat="{{r in right_tabs}}">
-				<cm-button class="bottom {{r.active?'active':''}}" on-tap="{{tabTap}}" active="{{r.active}}" id="{{r.id}}" label="{{r.label}}" clickHandler="{{tabClick}}"></cm-button>
+				<cm-button class="bottom {{r.id === tab?'active':''}}" on-tap="{{tabTap}}" active="{{r.active}}" id="{{r.id}}" label="{{r.label}}" clickHandler="{{tabClick}}"></cm-button>
 			</template>
 			<core-selection id="selector" on-core-select="{{tabReset}}"></core-selection>
 		</core-toolbar>
@@ -37,12 +39,12 @@
 			this.left_tabs = [
 				{ id: 		"logo"
 				, active: 	false
-				, label: 	"Logo"
+				, label: 	'<img src="cmicon.png"/>'
 				}
 			];
 			this.right_tabs = [
 				{ id: 		"landing"
-				, active: 	true
+				, active: 	false
 				, label: 	"Landing Pad"
 				},
 				{ id: 		"blog"
@@ -67,7 +69,7 @@
 			for( var i in this.right_tabs )
 				this.right_tabs[i].active = false;
 			sender.active = true;
-		} // tap End
+		}
 	});
 	</script>
 </polymer-element>
@@ -93,16 +95,18 @@
 		:host(.active) paper-button {
 			border-color: #00b2b3;
 			background-color: rgba(0,0,0,0.1333);
-			color:#00b2b3;
+			color:#22f9b0;
 		}
 		:host(.active:hover) paper-button {
-			background-color:#00b2b3;
+			background-color:#22f9b0;
 			color:#26343f;
 		}
 		paper-button::shadow #ripple {
 			color: #222;
 		}
 		</style>
+		<content>
+		</content>
 		<paper-button label="{{label}}"></paper-button>
 	</template>
 	<script>
@@ -132,6 +136,7 @@
 			},
       		click: function(event, detail, sender) {
       			/*this.clickHandler(sender)*/
+      			window.location.hash = "#"+this.id;
       		}
 		});
 	</script>

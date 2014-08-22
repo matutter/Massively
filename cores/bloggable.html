@@ -1,0 +1,168 @@
+<link rel="import" href="core-drawer-panel/core-drawer-panel.html"> 
+
+<polymer-element name="blog-tab" attributes="ptitle, tags, date, day">
+	<template>
+	<style>
+		:host {
+			display: block;
+			width: 100%;
+			color: white;
+			cursor: pointer;
+		}
+		:host .title {
+			color: #22f9b0;
+			font-weight: bold;
+			font-style: italic;
+			margin-top:  5px;
+			margin-left: 35px;
+		}
+		:host .description {
+			border: 1px solid rgba(255,255,255,0.5);
+			border-radius: 3px;
+			padding: 5px;
+			margin-top: -5px;
+		}
+		.pad {
+			padding: 24px;
+			padding-bottom: 5px;
+		}
+		.date {
+			min-width: 100px;
+			background: url(greentab.png) bottom left no-repeat;
+			height: 80px;
+			margin-left: -46px;
+			float: left;
+			text-align: center;
+			text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+		}
+		.date h3 {
+			background: #22f9b0;
+			padding: 0;
+			margin:0;
+			padding-top: 4px;
+		}
+
+		.date p {
+			margin: 0;
+			color: #fff;
+			font-size: 0.75em;
+		}
+
+		.tags {
+			margin-left: 24px;
+			padding: 14px;
+
+		}
+
+		.tag {
+			display: inline-block;
+			height: 10px;
+			background: white;
+			color:#444;
+			padding: 2px;
+			min-width: 20px;
+			min-height: 20px;
+			border-radius: 3px;
+			text-align: center;
+		}
+	</style>
+
+	<div class="date">
+		<h3> {{day}} </h3>
+		<p> {{date}} </p>
+	</div>
+
+	<core-layout>
+		<div core-flex>
+			<h1 class="title">{{ptitle}}</h1>
+		</div>
+		<div class="tags"> 
+			<template repeat="{{t in tags}}">
+				<div class="tag"> {{t}} </div>
+			</template>
+		</div>
+	</core-layout>
+		
+	<p class="description">
+		<content>
+		</content>
+	</p>
+	
+	</template>
+	<script>
+	Polymer('blog-tab', {
+		ptitle	: "",
+		tags	: "",
+		date	: "",
+		day 	: "",
+		id 		: "",
+		ready: function(){}
+
+	});
+	</script>
+</polymer-element>
+
+<polymer-element name="bloggable-blog" attributes="postID">
+	<template>
+	<style>
+	:host {
+		color:white;
+		display: inline-block;
+		min-height: 300px;	
+	}
+
+	:host /deep/ .stretch {
+		margin: 0;
+	}
+
+	:host /deep/ .focus, .blog-chooser {
+		display: block;
+		background: #fff;
+		color: #333;
+		margin: 40px;
+		margin-left: 80px;
+		padding: 24px;
+		border-radius: 3px;
+	}
+
+	:host .blog-chooser {
+		background: rgba(0,0,0,0.2);
+	}
+	:host .blog-chooser:hover {
+		background: rgba(0,0,0,0.2825);
+	}
+
+	</style>
+
+ 	<template repeat="{{p in posts}}">
+		<div class="blog-chooser">
+			<blog-tab ptitle="{{p.title}}" day="{{p.day}}" tags="{{p.tags}}" date="{{p.date}}">
+				{{p.desc}}	
+			</blog-tab>
+		</div>
+	</template>
+
+	<core-ajax id="ajax"
+		auto 
+		url="./posts.json"
+		on-core-response="{{updatePosts}}"
+		handleAs="json">
+	</core-ajax>
+
+	</template>
+	<script>
+	Polymer('bloggable-blog',{
+		postID: 0,
+		posts: [],
+		ready: function(){
+
+		},
+		updatePosts: function(){
+			this.posts = this.$.ajax.response.slice(0);
+		}
+
+	});
+
+	</script>
+
+</polymer-element>
