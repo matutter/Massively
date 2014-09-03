@@ -4,15 +4,13 @@
 		<script src="cores/platform/platform.js"></script>
 		<link rel="import" href="cores/polymer/polymer.html">
 		<link rel="import" href="cores/core-range/core-range.html">
-		<link rel="import" href="cores/font-roboto/roboto.html">
+		<!-- <link rel="import" href="cores/font-roboto/roboto.html"> -->
 		<link rel="import" href="cores/core-layout/core-layout.html">
 		<link rel="import" href="cores/core-ajax/core-ajax.html">
 		<link rel="import" href="cores/core-animated-pages/core-animated-pages.html">
+		<link rel="import" href="cores/core-icon/core-icon.html">
+		<link rel="import" href="cores/core-icons/core-icons.html">
 
-	<!--
-		<link rel="import" href="cores/core-pages/core-pages.html">
-		<link rel="import" href="cores/core-selection/core-selection.html">
-	-->
 		<link rel="import" href="cores/menu.html">
 		<link rel="import" href="cores/app-styles.html">
 		<link rel="import" href="cores/page-slider.html">
@@ -48,23 +46,33 @@
 			view : "",
 			current : 0,
 			observe : {
-				view : 'renderContet'
+				view : 'renderContent'
 			},
-			routes : {
-				  "logo": 	{ url:"cores/home-tray.html", elem:"home-tray", cache:null}
-				, "landing":{ url:"cores/home-tray.html", elem:"home-tray", cache:null}
-				, "blog": 	{ url:"cores/bloggable.html", elem:"bloggable-blog", cache:null}
-				, "git": 	{ url:"cores/place-holder.html", elem:"place-holder", cache:null}
-				, "about": 	{ url:"cores/place-holder.html", elem:"place-holder", cache:null}
-				, "" : 		{ url:"cores/home-tray.html", elem:"home-tray", cache:null}
-			},
+			routes : {},
 			ready: function() {
+				this.routes = {
+					  "logo": 	{ url:"cores/home-tray.html"	, elem:"home-tray"	, cache:null}
+					, "landing":{ url:"cores/home-tray.html"	, elem:"home-tray"	, cache:null}
+					, "blog": 	{ url:"cores/bloggable.html"	, elem:"bloggable-blog", cache:null}
+					, "git": 	{ url:"cores/place-holder.html"	, elem:"place-holder", cache:null}
+					, "about": 	{ url:"cores/place-holder.html"	, elem:"place-holder", cache:null}
+					//, "" : 		{ url:"cores/home-tray.html"	, elem:"home-tray"	, cache:null}
+				}
 				this.ctx = function() {
 					return this.routes[this.view];
 				};
-				this.view = window.location.hash.split("#")[1];
+				for( var key in this.routes ) 
+					if( window.location.hash.indexOf(key) >= 0 ) {
+						this.view = key;
+						console.log( key )
+					}
+
+				if( this.view.length == 0 ) 	this.view = 'landing';
+				
+
+				
 			}, // ready End
-			renderContet: function(){
+			renderContent: function(){
 				page = this.ctx();
 				//console.log( "rendering: " + page.elem + "\tmethod: " + (page.cached?"Cache":"Ajax") );
 

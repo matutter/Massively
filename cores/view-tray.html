@@ -1,0 +1,97 @@
+<polymer-element name="view-tray" attributes="viewType">
+	<template>
+	<style>
+	:host {
+		display: block;
+		height: 34px;
+		margin-bottom: 20px;
+		width: 216px;
+	}
+	core-icon {
+		display: inline-block;
+		cursor: pointer;
+		float: right;
+	}
+	.icon-container {
+		float: left;
+		margin: 0 5px;
+		display: inline-block;
+	}
+	.container {
+		float: left;
+		padding: 5px;
+		height: 24px;
+		border-radius: 4px;
+		background: rgba(0,0,0,0.5);
+	}
+	.label {
+		float:right;
+		text-align: center;
+		line-height: 24px;
+		
+		overflow: hidden;
+		width: 0;
+	}
+	</style>
+	<div class="container">
+		<div class="label">
+			{{viewType}}
+		</div>
+		<div class="icon-container">
+			<core-icon icon="view-list" on-click="{{shift_list}}"></core-icon>
+			<core-icon icon="view-module" on-click="{{shift_module}}"></core-icon>
+		</div>
+	</div>
+	</template>
+	<script>
+	Polymer('view-tray',{
+		viewType : "" ,
+		animate : {} ,
+		start: "0px" ,
+		stop : "140px" ,
+		observe : {
+			viewType : 'viewShifted'
+		},
+		viewShifted: function() {
+			//console.log( this.viewType );
+		},
+		shift_list : function() {
+			this.viewType = "list";
+		},
+		shift_module : function() {
+			this.viewType = "module";
+		},
+		ready : function() {
+			var el_label = this.shadowRoot.querySelector('.label');
+			this.animate = new CoreAnimation();
+			this.animate.duration = 370;
+			this.animate.keyframes = [
+				{ width: this.start },
+				{ width: this.stop }
+			];
+			this.animate.target = el_label;
+			this.animate.fill = "forwards"
+
+			/**************/
+			this.an2 = new CoreAnimation();
+			this.an2.duration = 370;
+			this.an2.keyframes = [
+				{ width: this.end },
+				{ width: this.start }
+			];
+			this.an2.target = el_label;
+			this.an2.fill = "forwards"
+		}, 
+		domReady : function() {
+			this.addEventListener('mouseenter', function() {
+				this.an2.pause();
+				this.animate.play();
+			}, true)
+			this.addEventListener('mouseleave', function() {
+				this.animate.pause();
+				this.an2.play();
+			}, true)
+		}
+	});
+	</script>
+</polymer-element>

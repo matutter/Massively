@@ -1,6 +1,5 @@
-<link rel="import" href="core-drawer-panel/core-drawer-panel.html"> 
-
-<polymer-element name="blog-tab" attributes="ptitle, tags, date, day">
+<link rel="import" href="view-tray.html">
+<polymer-element name="blog-tab" attributes="ptitle, tags, date, day, clickHandler, ref">
 	<template>
 	<style>
 		:host {
@@ -17,7 +16,8 @@
 			margin-left: 35px;
 		}
 		:host .description {
-			border: 1px solid rgba(255,255,255,0.5);
+			border: 1px solid rgba(0,0,0,0.5);
+			background: rgba(0,0,0,0.3);
 			border-radius: 3px;
 			padding: 5px;
 			margin-top: -5px;
@@ -41,19 +41,16 @@
 			margin:0;
 			padding-top: 4px;
 		}
-
 		.date p {
 			margin: 0;
 			color: #fff;
 			font-size: 0.75em;
 		}
-
 		.tags {
 			margin-left: 24px;
 			padding: 14px;
 
 		}
-
 		.tag {
 			display: inline-block;
 			height: 10px;
@@ -65,7 +62,14 @@
 			border-radius: 3px;
 			text-align: center;
 		}
+		.ico-fix {
+			float:right;
+			color:rgba(0,0,0,0.3);
+			margin-top: -2.3px;
+		}
 	</style>
+
+	<core-style ref="reg-btn"></core-style>
 
 	<div class="date">
 		<h3> {{day}} </h3>
@@ -87,6 +91,8 @@
 		<content>
 		</content>
 	</p>
+
+	<a class="btn sm right reg-btn" on-tap="{{clickHandler}}" >Read more <core-icon class="ico-fix" icon="forward"></core-icon></a>
 	
 	</template>
 	<script>
@@ -102,63 +108,143 @@
 	</script>
 </polymer-element>
 
-<polymer-element name="bloggable-blog" attributes="postID">
+<polymer-element name="bloggable-blog" attributes="postView">
 	<template>
 	<style>
 	:host {
 		color:white;
+		width: calc(100% - 80px);
 		display: inline-block;
 		min-height: 300px;	
-	}
-
-	:host /deep/ .stretch {
-		margin: 0;
-	}
-
-	:host /deep/ .focus, .blog-chooser {
-		display: block;
-		background: #fff;
-		color: #333;
 		margin: 40px;
+	}
+	.blog-chooser {
+		background: rgba(0,0,0,0.2);
 		margin-left: 80px;
 		padding: 24px;
 		border-radius: 3px;
+		margin-bottom: 40px;
 	}
-
-	:host .blog-chooser {
-		background: rgba(0,0,0,0.2);
+	.tr-reg div {
+		border-right: 1px solid rgba(255,255,255,0.3);
+		margin-left: 5px;
+		padding-right: 5px;
 	}
-	:host .blog-chooser:hover {
-		background: rgba(0,0,0,0.2825);
+	.tr-reg {
+		border-bottom: 1px solid rgba(255,255,255,0.3);
+		padding: 10px;
+		background: rgba(0,0,0,0.1);
+		border-radius: 3px;
+		display: inline-block;
+		margin: 2px;
 	}
-
+	.tr-reg:hover div {
+		border-color: #24ac7e;
+	}
+	.tr-reg:hover {
+		border-color: #24ac7e;
+		cursor: pointer;
+		box-shadow: 1px 3px 1px rgba(36,172,126,0.1);
+	}
+	a {
+		text-decoration: none;
+		color: white;
+		padding-left: 5px;
+	}
+	.tr-reg:hover  a {
+		color: #24ac7e;
+	}
 	</style>
 
- 	<template repeat="{{p in posts}}">
-		<div class="blog-chooser">
-			<blog-tab ptitle="{{p.title}}" day="{{p.day}}" tags="{{p.tags}}" date="{{p.date}}">
-				{{p.desc}}	
-			</blog-tab>
-		</div>
-	</template>
+	<view-tray viewType="{{viewType}}"></view-tray>
 
-	<core-ajax id="ajax"
-		auto 
-		url="./posts.json"
-		on-core-response="{{updatePosts}}"
-		handleAs="json">
-	</core-ajax>
+	<!-- post preview -->
+	
+	 	<template repeat="{{ p in posts }}" if="{{viewType === 'module'}}">
+			<div class="blog-chooser">
+				<blog-tab id="{{p.id}}" on-tap="{{fetch}}" ptitle="{{p.title}}" day="{{p.day}}" tags="{{p.tags}}" date="{{p.date}}" clickHandler="{{fetch}}" ref="{{this}}">
+					{{p.desc}}	
+				</blog-tab>
+			</div>
+		</template>
+
+		<template if="{{viewType === 'list'}}">
+			<core-style ref="reg-btn"></core-style>
+			<template repeat="{{ p in posts }}">
+					<core-layout class="tr-reg">
+						<div> {{p.date}} </div>
+						<div flex> {{p.title}} </div> 
+						<div flex> <i class="li-desc">"{{ mindesc(p.desc)}}"</i> </div>
+						<a on-tap="{{fetch}}" id="{{p.id}}"> Read More </a>
+					</core-layout>
+			</template>
+		</template>
+	</tamplate>
+
+
+	<template >
+		<a> asdasd </a>
+	</template>
+	<!-- Post focus -->
 
 	</template>
 	<script>
 	Polymer('bloggable-blog',{
-		postID: 0,
-		posts: [],
-		ready: function(){
+		postView: 0,
+		posts	: [],
+		viewType: "list",
+		ref 	: {},
+		observe : {
+			viewType : function() {
+			},
+			postView : function() {
+				var postTag = "?post=";
 
+				this.tryLoad( this.postView, function(error, id){
+					if(error) return;
+
+					var hash = window.location.hash
+					if( hash.indexOf( postTag ) >= 0 ) {
+						var part = hash.substring( hash.indexOf(postTag) + postTag.length, hash.length ).replace(/\?.*/,'')
+						if( part.length == 0 )
+							window.location.hash = postTag + id;
+						else
+							window.location.hash = window.location.hash.replace( part, id )
+					}
+					else
+						window.location.hash += postTag + id;
+				});
+			}
+		},
+		tryLoad : function(id, cb) {
+
+			cb(false, id);
+		},
+
+		ready: function(){
+			ref = this;
+			var postTag = "?post=";
+			var hash = window.location.hash
+			postView = hash.substring( hash.indexOf(postTag) + postTag.length, hash.length ).replace(/\?.*/,'')
+			this.updatePosts()
 		},
 		updatePosts: function(){
-			this.posts = this.$.ajax.response.slice(0);
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', 'blog&page=1&size=25', true);
+			xhr.responseType = "JSON";
+			xhr.onload = function(e) {
+
+				ref.posts = JSON.parse(e.target.responseText.slice(0));
+				
+			}
+
+			xhr.send();
+		},
+		mindesc : function(s) {
+			return s.substring(0,100);
+		},
+		fetch: function( sender ) {
+			ref.postView = sender.srcElement.id;
 		}
 
 	});
