@@ -59,7 +59,7 @@
 					//, "" : 		{ url:"cores/home-tray.html"	, elem:"home-tray"	, cache:null}
 				}
 				this.ctx = function() {
-					return this.routes[this.view];
+					return this.routes[this.view] || this.routes['landing'] ;
 				};
 				for( var key in this.routes ) 
 					if( window.location.hash.indexOf(key) >= 0 ) {
@@ -74,8 +74,10 @@
 			}, // ready End
 			renderContent: function(){
 				page = this.ctx();
-				//console.log( "rendering: " + page.elem + "\tmethod: " + (page.cached?"Cache":"Ajax") );
+				console.log( "rendering: " + page.elem + "\tmethod: " + (page.cached?"Cache":"Ajax") );
 
+
+				return;
 				if( page.cache == null )
 					this.Import( page, this );
 				else this.current = page.cache

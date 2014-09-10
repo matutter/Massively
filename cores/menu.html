@@ -27,7 +27,14 @@
 				</cm-button>
 			</template>
 			<template repeat="{{r in right_tabs}}">
-				<cm-button class="bottom {{r.id === tab?'active':''}}" on-tap="{{tabTap}}" active="{{r.active}}" id="{{r.id}}" label="{{r.label}}" clickHandler="{{tabClick}}"></cm-button>
+				<cm-button
+					class="bottom {{r.id === tab?'active':''}}"
+					on-tap="{{tabTap}}"
+					active="{{r.active}}"
+					id="{{r.id}}"
+					label="{{r.label}}"
+					clickHandler="{{tabClick}}">
+				</cm-button>
 			</template>
 			<core-selection id="selector" on-core-select="{{tabReset}}"></core-selection>
 		</core-toolbar>
@@ -35,6 +42,9 @@
 	</template>
 	<script>
 	Polymer('cm-menu',{
+		left_tabs : [],
+		right_tabs: [],
+
 		ready: function(){
 			this.left_tabs = [
 				{ id: 		"logo"
@@ -69,6 +79,7 @@
 			for( var i in this.right_tabs )
 				this.right_tabs[i].active = false;
 			sender.active = true;
+			console.log( sender.name )
 		}
 	});
 	</script>
