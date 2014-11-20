@@ -12,6 +12,7 @@ function aliased( res, page ) {
 }
 // user is the DB entry for the user
 function std_page( res, template ) {
+  console.log("TMPLT " + template)
   var resourceData = {
       'pretty': false,
       'page'  : template,
@@ -34,6 +35,7 @@ function std_page( res, template ) {
 }
 
 function std_content(res, pathto, file, mime) {
+  console.log("Content " + file)
   if( file.lastIndexOf('/') >= 0 )
     file = file.substring( file.lastIndexOf('/') )
 
@@ -46,12 +48,12 @@ function std_content(res, pathto, file, mime) {
 
 // * on error *
 function missingLayout(res, name, err) {
-/*  res.writeHead(200, {
+  res.writeHead(200, {
     //'Set-Cookie': cookieData,
-    'Content-Length': local.errPage.length,
+    'Content-Length': local.errMsg.length,
     'Content-Type': 'text/html' 
   });
-  res.end(local.errPage)*/
+  res.end(local.errMsg)
 }
 // * on error *
 function err404(res, err) {

@@ -1,0 +1,82 @@
+@font-face {
+	font-family: Roboto-BI;
+	src: url("Roboto-BlackItalic.ttf");
+}
+
+html {
+	font-family: Roboto-BI, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background: #efefef;
+}
+.nav {
+	background: #26343f;
+	font-size: 12px;
+}
+.nav li {
+	display:inline-block;
+	padding: 5px;
+}
+.nav li a {
+	color: #eee;
+	margin: 0;
+	padding: 0px 10px;
+	text-transform: uppercase;
+}
+a { cursor:pointer; }
+.rd { border: 1px solid red; }
+.bl { border: 1px solid blue;}
+.nostyle {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.review {
+}
+.indicate {
+}
+.sessions {
+}
+.session {
+}
+
+.textarea li
+{
+	list-style: none;
+	display: list-item;
+}
+
+.lines {
+	color: #AAA;
+	white-space: pre;
+	text-align: right;
+	-webkit-box-shadow: 3px 0 2px -2px #888;
+	box-shadow: 3px 0 2px -2px #888;
+}
+
+hh {
+	border-radius: 2px;
+	background: #9accff;
+}
+
+cursor {
+	border: 1px solid red;	
+	margin: -1px;
+	animation: blink 0.8s steps(2, start) infinite;
+	-webkit-animation: blink 0.8s steps(2, start) infinite;
+}
+@keyframes blink {
+	to { border-color: red; }
+}
+@-webkit-keyframes blink {
+	to { border-color: transparent; }
+}
+.textarea {
+	white-space: pre;
+	width: 400px;
+	height: 300px;
+	cursor: text;
+	color:#333;
+	padding-left: 4px;
+}
+.editor {
+	width: 100%;
+}

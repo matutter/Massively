@@ -13,17 +13,7 @@ function server_obj(db) {
   this.setup = function( ) {
 
     handler.locals.viewDir = './resources/views/'
-    handler.locals.navbar = {
-      top:[
-        new defs.nav('glyphicon-home', 'Home', 'home', 'index'), 
-        new defs.nav('glyphicon-book', 'Blog', '', 'blog'),
-        new defs.nav('glyphicon-user', 'About', 'about', 'about')
-      ],
-      bottom:[
-        new defs.nav('glyphicon-briefcase', 'Projects', 'tools', 'tools')
-      ]
-    }
-
+    handler.locals.errMsg = "Sorry, that page doesn't exist..."
 
     var css = './resources/css/'
       , js  = './resources/js/'
@@ -57,18 +47,11 @@ function server_obj(db) {
     // which template renders for given page
     handler.pagePathTo['']       = handler.aliased
     handler.pagePathTo['home']   = handler.aliased
-    handler.pagePathTo['tools']  = handler.std_page
-    handler.pagePathTo['livemark']= handler.aliased
-    handler.pagePathTo['codemassively']= handler.aliased
-    handler.pagePathTo['pixel2']= handler.aliased
-    handler.pagePathTo['about'] = handler.std_page
+    handler.pagePathTo['about']  = handler.std_page
     /*Given:Used*/
     handler.setAlias({ 
-      '':'index',
-      'home':'index',
-      'livemark':'tools/livemark',
-      'codemassively':'tools/codemassively',
-      'pixel2':'tools/pixel2'
+      '':'main',
+      'home':'main'
     })
   } // setup
 
