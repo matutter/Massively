@@ -1,3 +1,7 @@
+var KEY = {
+	Enter:13
+	, Backspace : 8
+}
 function Line() {
 	this.No       = 0
 	this.text     = []
@@ -22,7 +26,7 @@ function Line() {
 		this.changing = true;
 	}
 	this.newline  = function(i) {
-		s = this.text.slice(i)
+		var s = this.text.slice(i)
 		this.text.splice(i)
 		return s;
 	}
@@ -54,8 +58,8 @@ var Editor = {
 	, keypressSpecial : function(e) {
 		if(    e.which == 8
 			|| e.which == 13
-			|| e.which >= 37
-			&& e.which <= 40 ) this.keyRoute(e)
+			|| (e.which >= 37
+			&& e.which <= 40) ) this.keyRoute(e)
 		this.reportShift(e)
 		this.debug(e)
 	}
@@ -74,9 +78,10 @@ var Editor = {
 		$('.sessions').text( s )		
 	}
 	, newline  : function() {
-		l = new Line()
-		l.text = this.Row().newline(this.c.col)
-
+		var l = new Line()
+		l.changed = true
+		if( this.Row().length() != 0 )
+			l.text = this.Row().newline(this.c.col)
 		this.text.splice( this.c.row+1, 0, l )
 		this.moveCursor('next')
 		this.c.col = 0
@@ -85,7 +90,7 @@ var Editor = {
 	, highlight    : function( newc, oldc ) {
 		var rows = newc.row - oldc.row
 		var cols = newc.col - oldc.col
-		alert( rows +","+ cols )
+		//alert( rows +","+ cols )
 	}
 	, moveCursor   : function(where) {
 		var col = this.c.col
@@ -197,8 +202,10 @@ var Editor = {
 	, update : function() {
 		this.validate()
 		s = ""
+		$('.lines').empty()
 		for (var i = 0; i < this.text.length; i++)
 		{
+			$('.lines').append(i+'\n')
 			s += '<li>'
 			if( this.c.row == i )
 				s += this.text[i].cursorat(this.c.col)
@@ -221,7 +228,7 @@ $(document).ready(function() {
 	}
 	$(window).keypress(function(e) { Editor.keypress(e) });
 	$(window).keydown (function(e) {
-		Editor.keypressSpecial(e)
+		if(e.which != 13) Editor.keypressSpecial(e)
 	});
 	$(window).keyup   (function(e) {
 		if(e.which != 8 && e.which != 13 && e.which < 37 && e.which > 40)

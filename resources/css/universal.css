@@ -40,8 +40,10 @@ a { cursor:pointer; }
 
 .textarea li
 {
+	height: 20px !important;
 	list-style: none;
 	display: list-item;
+	content: " ";
 }
 
 .lines {
